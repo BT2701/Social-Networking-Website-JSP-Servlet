@@ -51,8 +51,8 @@ CREATE TABLE IF NOT EXISTS `friend` (
 
 -- Dumping data for table j2ee.friend: ~0 rows (approximately)
 
--- Dumping structure for table j2ee.groupchat
-CREATE TABLE IF NOT EXISTS `groupchat` (
+-- Dumping structure for table j2ee.group
+CREATE TABLE IF NOT EXISTS `group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '0',
   `admin` int(11) NOT NULL DEFAULT 0,
@@ -61,46 +61,34 @@ CREATE TABLE IF NOT EXISTS `groupchat` (
   CONSTRAINT `FK_groupchat_user_2` FOREIGN KEY (`admin`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table j2ee.groupchat: ~0 rows (approximately)
+-- Dumping data for table j2ee.group: ~0 rows (approximately)
 
--- Dumping structure for table j2ee.group_messages
-CREATE TABLE IF NOT EXISTS `group_messages` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `group` int(11) NOT NULL DEFAULT 0,
-  `sender` int(11) NOT NULL DEFAULT 0,
-  `timeline` timestamp NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`),
-  KEY `FK_group_messages_groupchat` (`group`),
-  KEY `FK_group_messages_user` (`sender`),
-  CONSTRAINT `FK_group_messages_groupchat` FOREIGN KEY (`group`) REFERENCES `groupchat` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_group_messages_user` FOREIGN KEY (`sender`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- Dumping data for table j2ee.group_messages: ~0 rows (approximately)
-
--- Dumping structure for table j2ee.join_group
-CREATE TABLE IF NOT EXISTS `join_group` (
+-- Dumping structure for table j2ee.joining
+CREATE TABLE IF NOT EXISTS `joining` (
   `group` int(11) NOT NULL,
   `user` int(11) NOT NULL,
   `timeline` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`group`,`user`),
   KEY `FK_join_group_user` (`user`),
-  CONSTRAINT `FK_join_group_groupchat` FOREIGN KEY (`group`) REFERENCES `groupchat` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_join_group_groupchat` FOREIGN KEY (`group`) REFERENCES `group` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_join_group_user` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table j2ee.join_group: ~0 rows (approximately)
+-- Dumping data for table j2ee.joining: ~0 rows (approximately)
 
 -- Dumping structure for table j2ee.message
 CREATE TABLE IF NOT EXISTS `message` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `sender` int(11) NOT NULL DEFAULT 0,
-  `receiver` int(11) NOT NULL DEFAULT 0,
+  `receiver` int(11) DEFAULT 0,
   `content` varchar(255) NOT NULL DEFAULT '0',
   `timeline` timestamp NOT NULL DEFAULT current_timestamp(),
+  `group` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_message_user` (`sender`),
   KEY `FK_message_user_2` (`receiver`),
+  KEY `FK_message_group` (`group`),
+  CONSTRAINT `FK_message_group` FOREIGN KEY (`group`) REFERENCES `group` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_message_user` FOREIGN KEY (`sender`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_message_user_2` FOREIGN KEY (`receiver`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -162,6 +150,12 @@ CREATE TABLE IF NOT EXISTS `user` (
   `desc` varchar(255) DEFAULT NULL,
   `isonline` int(11) NOT NULL DEFAULT 1,
   `last_active` timestamp NOT NULL DEFAULT current_timestamp(),
+  `password` varchar(255) NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `social` varchar(255) DEFAULT NULL,
+  `education` varchar(255) DEFAULT NULL,
+  `relationship` varchar(255) DEFAULT NULL,
+  `timejoin` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
