@@ -5,7 +5,15 @@
              version="3.0">
   <persistence-unit name="examplePU" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-    <!--        <class>com.example.entity.YourEntity</class>-->
+    <class>org.example.j2ee.Model.Comment</class>
+    <class>org.example.j2ee.Model.Friend</class>
+    <class>org.example.j2ee.Model.Group</class>
+    <class>org.example.j2ee.Model.Joining</class>
+    <class>org.example.j2ee.Model.Message</class>
+    <class>org.example.j2ee.Model.Notification</class>
+    <class>org.example.j2ee.Model.Post</class>
+    <class>org.example.j2ee.Model.Reaction</class>
+    <class>org.example.j2ee.Model.User</class>
     <properties>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/j2ee"/>

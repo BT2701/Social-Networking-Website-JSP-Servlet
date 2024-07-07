@@ -1,15 +1,23 @@
 package org.example.j2ee.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.sql.Timestamp;
 
 @Entity(name = "joining")
 @Data
 public class Joining {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private Group group;
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private User user;
+    @Column
+    @Temporal(TemporalType.TIMESTAMP)
+    private Timestamp timeline;
+
 }
