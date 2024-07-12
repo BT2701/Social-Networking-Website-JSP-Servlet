@@ -1,0 +1,178 @@
+/* navbar */
+.search-container{
+    display: flex;
+    width: 100vw;
+
+}
+.search-left{
+    position: fixed;
+    display: flex;
+    max-width: 20%;
+    width: 100%;
+    flex-direction: column;
+    justify-content: left;
+    top: 1em;
+    left: 0.5em;
+    border-right: 1px solid beige;
+    height: 100%;
+}
+.search-left-title{
+    display: flex;
+    justify-content: left;
+    border-bottom: 1px solid rgb(125, 115, 115);
+}
+.search-left-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+}
+.search-left-content>button{
+    text-align: left;
+    margin: 0.5em;
+}
+.search-left-content>button>i{
+    margin-right: 1em;
+    border: 1px solid rgb(170, 168, 168);
+    padding: 5px;
+    border-radius: 50%;
+    background-color: gainsboro;
+}
+
+
+
+
+/* content */
+.search-content{
+    display: flex;
+    max-width: 80%;
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+    position: absolute;
+    left: 21%;
+    background-color: rgba(174, 167, 167, 0.8);
+}
+/* user */
+.search-content-user, .search-content-post{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 1em 20%;
+    border-bottom: 1px solid gainsboro;
+}
+.search-content-user-box{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    background-color: rgb(170, 168, 168);
+    width: 100%;
+    border-radius: 10px;
+    margin: 1em;
+}
+.search-content-user-box-left, .search-content-post-header-left{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 2em;
+}
+.search-content-user-box-left>img, .search-content-post-header-left>img{
+    max-width: 60px;
+    width: 100%;
+    border-radius: 50%;
+    margin: 0.5em;
+}
+.search-content-user-box-mid, .search-content-post-header-mid{
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    margin-left: 1em;
+}
+.search-content-user-box-mid-name>a, .search-content-post-header-mid>a{
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+.search-content-user-box-mid-bonus{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.search-content-user-box-mid-bonus>li, .search-content-post-header-mid>li{
+    margin: 0.5em;
+}
+.search-content-user-box-mid-bonus>li:first-child, .search-content-post-header-mid>li{
+    list-style-type: none;
+}
+.search-content-user-box-right{
+    margin-left: 11em;
+}
+
+
+/* post */
+.search-content-post-box{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    background-color: rgb(170, 168, 168);
+    width: 100%;
+    border-radius: 10px;
+    margin: 1em;
+}
+.search-content-post-header{
+    display: flex;
+    justify-content: left;
+
+}
+.search-content-post-header-right{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 58%;
+}
+.search-content-post-mid{
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    margin: 1em;
+}
+.search-content-post-mid>p{
+    height: 60px;              /* Đặt chiều cao cố định */
+    overflow: hidden;          /* Ẩn nội dung tràn ra ngoài */
+    display: -webkit-box;      /* Định dạng thành hộp flex */
+    -webkit-box-orient: vertical; /* Định hướng hộp flex theo chiều dọc */
+    -webkit-line-clamp: 3;     /* Giới hạn số dòng hiển thị */
+    line-height: 20px;         /* Chiều cao dòng */
+    text-overflow: ellipsis;   /* Hiển thị dấu ba chấm khi nội dung tràn */
+}
+.search-content-post-mid>img{
+    max-width: 100%;
+    border-radius: 5px;
+}
+.search-content-post-footer{
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    margin: 0.5em 2em;
+}
+.search-content-post-footer-top{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid gainsboro;
+    align-items: center;
+    padding-bottom: 1em;
+}
+.search-content-post-footer-top>li{
+    list-style-type: none;
+}
+.search-content-post-footer-bot{
+    display: flex;
+    justify-content: space-evenly;
+}
+.search-content-post-footer-bot>button{
+
+}
+.search-content-post-footer-bot>button>i{
+    margin-right: 0.5em;
+}
