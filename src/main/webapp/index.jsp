@@ -7,6 +7,6 @@
 <body>
 <h1><%= "Hello World!" %></h1>
 <br/>
-<a href="Template/Searcher/search.jsp">Hello Servlet</a>
+<a href="helloServlet">Hello Servlet</a>
 </body>
 </html>
