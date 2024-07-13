@@ -15,8 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 public class HelloServlet extends HttpServlet {
     private String message;
 
-
-
     @SneakyThrows
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.getRequestDispatcher("/WEB-INF/jsp/search.jsp").forward(request,response);
