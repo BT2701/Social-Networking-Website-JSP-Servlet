@@ -1,0 +1,827 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+:root {
+    --primary-color: #0866FF;
+}
+body {
+    overflow-x: hidden;
+}
+
+.display-none {
+    display: none;
+}
+.display-block {
+    display: block;
+}
+
+.header {
+    padding: 30px 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header__info {
+    display: flex;
+    align-items: center;
+}
+.header__info .info p {
+    margin-top: 10px;
+    color: rgb(82, 82, 82);
+}
+.info--desc {
+    max-width: 500px;
+    display: block;
+    word-wrap: break-word;
+}
+.header__option button {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+
+    font-size: 15px;
+
+    color: white;
+    background-color: var(--primary-color);
+    cursor: pointer;
+}
+
+.image__container {
+    width: 150px;
+    height: 150px;
+    margin-right: 20px;
+
+    position: relative;
+}
+.image__container img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    border-radius: 50%;
+}
+#editAvatar {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: gray;
+    opacity: 0.7;
+
+    /*display: flex;*/
+    justify-content: center;
+    flex-wrap: wrap;
+    align-content: center;
+
+    cursor: pointer;
+
+    display: none;
+}
+#editAvatar i {
+    font-size: 20px;
+    color: white;
+}
+.image__container:hover #editAvatar{
+    display: flex;
+}
+
+.separator {
+    height: 2px;
+    width: 100vw;
+
+    background-color: grey;
+}
+
+.content {
+    padding: 20px 20px;
+    background-color: #f6f5f5;
+    min-height: calc(100vh - 200px);
+    display: flex;
+}
+.content__leftside {
+    flex: 1;
+}
+
+.info__container {
+    max-width: 800px;
+    width: 390px;
+    margin: 0 auto;
+    padding: 20px;
+
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 2px gray;
+    margin-bottom: 15px;
+}
+.info__container span {
+    font-size: 16px;
+}
+.info__container div {
+    margin: 7px 0;
+}
+.sp-title {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.friends__container {
+    max-width: 800px;
+    width: 390px;
+    margin: 0 auto;
+    padding: 20px;
+
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 2px gray;
+}
+.friends__container--header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.friends__container--header a {
+    font-size: 16px;
+    text-decoration: none;
+    color: black;
+}
+.friends__container--header div h2 {
+    font-size: 18px;
+    text-decoration: none;
+    color: black;
+    margin-bottom: 2px;
+    padding: 0;
+}
+
+.friends__container--content {
+    padding-top: 10px;
+}
+.danh-sach-ban-be {
+    display: flex;
+    justify-content: start;
+    flex-wrap: wrap;
+}
+.friend__wrap {
+    padding: 3px 5px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    text-decoration: none;
+    margin: 3px;
+}
+#friendsBtn {
+    background-color: white;
+    border: none;
+
+    font-size: 15px;
+    cursor: pointer;
+}
+.friend__wrap .hinh-anh {
+    width: 100px;
+    height: 100px;
+}
+.friend__wrap .hinh-anh img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+/* .friend__wrap .thong-tin {
+} */
+.friend__wrap .thong-tin h3 {
+    padding: 5px 0 0 0;
+    font-size: 15px;
+}
+
+/* Styles for the modal friends */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+.modal-content {
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 400px;
+    border-radius: 5px;
+}
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+.friendsModal-container {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.friend-list {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+
+    margin-top: 20px;
+
+    width: 100%;
+    max-height: 650px;
+    overflow-y: scroll;
+}
+.friend-item {
+    margin: 7px;
+    text-align: center;
+
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+
+    padding-right: 10px;
+}
+.friend-item img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+
+    margin-right: 10px;
+}
+/* Style cho modal delete post */
+.modalDeletePost {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content-DeletePost {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 300px;
+
+    border-radius: 5px;
+}
+
+.modal-content-DeletePost p {
+    font-size: 16px;
+}
+
+.deleteModal-btn-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+
+    margin-top: 20px;
+}
+
+.deleteModal-btn-wrapper button {
+    padding: 5px 12px;
+    margin: 0 5px;
+
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 15px;
+
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+}
+/* Styles for the modal edit profile */
+.modal2 {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+.editProfileModal2-container {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal-content2 {
+    background-color: #fefefe;
+    margin: 15px auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 500px;
+
+    border-radius: 5px;
+}
+.modal-content2 h3 {
+    font-size: 20px;
+}
+.close2 {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close2:hover,
+.close2:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+#editProfileForm2 {
+    margin-top: 20px;
+    text-align: center;
+}
+#editProfileForm2 .input-wrapper {
+    display: flex;
+    align-items: center;
+    margin: 7px 0;
+}
+.input-wrapper select {
+    outline: none;
+    padding: 2px 10px;
+    font-size: 14px;
+}
+.input-wrapper textarea {
+    outline: none;
+    padding: 5px;
+    font-size: 13px;
+
+    border: 1px solid;
+    border-radius: 4px;
+
+    flex: 1;
+    height: 100px;
+    resize: none; /* Ngăn textarea mở rộng tự động */
+}
+#editProfileForm2 label {
+    margin-right: 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+#editProfileForm2 input {
+    flex: 1;
+    font-size: 13px;
+    padding: 5px 7px;
+    outline: none;
+    border: 1px solid;
+    border-radius: 4px;
+}
+.editProfileForm2-btn-submit {
+    font-size: 16px;
+    color: white;
+    background-color: var(--primary-color);
+    border: none;
+    text-align: center;
+    padding: 8px 20px;
+
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+
+.content__rightside {
+    flex: 2;
+    margin-left: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.post {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 2px gray;
+
+    width: 650px;
+    height: auto;
+    padding: 15px 0;
+
+    margin-bottom: 20px;
+}
+.post__info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 20px;
+}
+.post__info--user {
+    display: flex;
+    align-items: center;
+}
+.post__info--user img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+.post__info--user small {
+    color: gray;
+}
+.post__info--option button {
+    border: none;
+    background: none;
+    padding: 2px;
+
+    cursor: pointer;
+}
+.post__info--option .btn-edit {
+    margin-right: 10px;
+}
+/* .post__info--option .btn-delete {
+} */
+
+.post__desc p {
+    padding: 15px 20px 10px;
+}
+
+.post__image {
+    width: 100%;
+    height: 400px;
+
+    background-color: darkgray;
+}
+.post__image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+}
+
+.post__action {
+    padding: 15px 20px 0px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    position: relative;
+}
+.post__action::before {
+    content: "";
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 2px;
+    height: 100%;
+
+    background-color: rgb(214, 213, 213);
+}
+.post__action div {
+    flex: 1;
+    text-align: center;
+}
+.post__action button {
+    background-color: white;
+    border: none;
+
+    padding: 3px 5px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.like-button, .unlike-button {
+    display: none;
+}
+.like-button.active, .unlike-button.active {
+    display: inline-block;
+}
+
+.post__comment {
+    width: 100%;
+    margin-top: 15px;
+
+    padding: 0 10px;
+
+    /* display: block; */
+}
+.post__comment-input {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 15px;
+}
+.post__comment-input input {
+    flex: 1;
+
+    outline: none;
+    padding: 7px 10px;
+    font-size: 14px;
+
+    border: 1px solid;
+    border-radius: 5px;
+}
+.post__comment-input button {
+    font-size: 16px;
+    color: black;
+    background-color: white;
+    font-weight: bold;
+    border: none;
+    text-align: center;
+    padding: 6px 10px;
+
+    cursor: pointer;
+}
+.post__comment-list {
+    max-width: 100%;
+    /* overflow: hidden;     */
+}
+.post__comment-item {
+    display: flex;
+    align-items: start;
+
+    margin: 10px 0;
+}
+.post__comment-item a {
+    text-decoration: none;
+    color: black;
+}
+.post__comment-item img {
+    width: 30px;
+    height: 30px;
+
+    object-fit: cover;
+    border-radius: 50%;
+
+    margin-right: 10px;
+}
+.post__comment-item p {
+    /*max-width: 85%;*/
+    display: block;
+    word-wrap: break-word;
+}
+.comment__see-more {
+    margin-top: 20px;
+    margin-bottom: 5px;
+
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: underline;
+}
+
+/* Modal edit post styles */
+.modalEditPost {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modalEditPost-container {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content-EditPost {
+    background-color: #fefefe;
+    margin: 15px auto;
+    padding: 20px;
+    border: 1px solid #888;
+
+    width: 650px;
+    height: auto;
+
+    border-radius: 5px;
+}
+
+#editPostForm {
+    margin-top: 20px;
+}
+.post__image {
+    width: 100%;
+    height: 400px;
+}
+#postImagePreview {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+
+    margin-bottom: 15px;
+}
+
+.editPost__save-Btn--wrapper {
+    width: 100%;
+    text-align: center;
+}
+
+.editPost__save-Btn {
+    font-size: 16px;
+    color: white;
+    background-color: var(--primary-color);
+    border: none;
+    text-align: center;
+    padding: 8px 20px;
+
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#postContent {
+    outline: none;
+    padding: 5px;
+    font-size: 13px;
+
+    border: 1px solid;
+    border-radius: 4px;
+
+    flex: 1;
+    height: 80px;
+    resize: none; /* Ngăn textarea mở rộng tự động */
+}
+
+.form-group label {
+    margin-right: 10px;
+}
+
+.editPost-title {
+    width: 100%;
+    text-align: center;
+
+    margin-bottom: 20px;
+}
+
+.close-EditPost {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-EditPost:hover,
+.close-EditPost:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Modal edit avatar styles */
+.modalEditAvatar {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modalEditAvatar-container {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content-EditAvatar {
+    background-color: #fefefe;
+    margin: 15px auto;
+    padding: 20px;
+    border: 1px solid #888;
+
+    width: 650px;
+    height: auto;
+
+    border-radius: 5px;
+}
+#editAvatarForm {
+    margin: 30px 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.avatar__image {
+    width: 400px;
+    height: 400px;
+
+    border-radius: 50%;
+
+    background-color: darkgray;
+}
+#avatarImagePreview {
+    width: 100%;
+    height: 100%;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+}
+
+.editAvatar__save-Btn--wrapper {
+    width: 100%;
+    text-align: center;
+}
+
+.editAvatar__save-Btn {
+    font-size: 16px;
+    color: white;
+    background-color: var(--primary-color);
+    border: none;
+    text-align: center;
+    padding: 8px 20px;
+
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#postContent {
+    outline: none;
+    padding: 5px;
+    font-size: 13px;
+
+    border: 1px solid;
+    border-radius: 4px;
+
+    flex: 1;
+    height: 80px;
+    resize: none; /* Ngăn textarea mở rộng tự động */
+}
+
+.editAvatar-title {
+    width: 100%;
+    text-align: center;
+
+    margin-bottom: 30px;
+}
+
+.close-EditAvatar {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-EditAvatar:hover,
+.close-EditAvatar:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
