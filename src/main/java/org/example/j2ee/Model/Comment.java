@@ -5,17 +5,18 @@ import lombok.Data;
 
 import java.sql.Timestamp;
 
-@Entity(name = "comment")
+@Entity
+@Table(name = "comment")
 @Data
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "user", referencedColumnName = "id")
     private User user;
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "post", referencedColumnName = "id")
     private Post post;
     @Column
     private String content;

@@ -5,17 +5,18 @@ import lombok.Data;
 
 import java.sql.Timestamp;
 
-@Entity(name = "reaction")
+@Entity
+@Table(name = "reaction")
 @Data
 public class Reaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "user", referencedColumnName = "id")
     private User user;
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "post", referencedColumnName = "id")
     private Post post;
     @Column
     @Temporal(TemporalType.TIMESTAMP)

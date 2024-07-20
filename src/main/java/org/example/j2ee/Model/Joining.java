@@ -5,19 +5,22 @@ import lombok.Data;
 
 import java.sql.Timestamp;
 
-@Entity(name = "joining")
+@Entity
+@Table(name = "joining")
 @Data
 public class Joining {
     @Id
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "group", referencedColumnName = "id", nullable = false)
     private Group group;
+
     @Id
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "user", referencedColumnName = "id", nullable = false)
     private User user;
-    @Column
+
+    @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Timestamp timeline;
-
 }
+
