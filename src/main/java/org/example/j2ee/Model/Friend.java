@@ -5,7 +5,8 @@ import lombok.Data;
 
 import java.sql.Timestamp;
 
-@Entity(name = "friend")
+@Entity
+@Table(name = "friend")
 @Data
 public class Friend {
     @Id

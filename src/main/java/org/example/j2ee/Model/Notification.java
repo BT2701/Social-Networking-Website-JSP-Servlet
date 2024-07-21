@@ -5,14 +5,15 @@ import lombok.Data;
 
 import java.sql.Timestamp;
 
-@Entity(name = "notification")
+@Entity
+@Table(name = "notification")
 @Data
 public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "user", referencedColumnName = "id")
     private User user;
     @Column
     private String content;

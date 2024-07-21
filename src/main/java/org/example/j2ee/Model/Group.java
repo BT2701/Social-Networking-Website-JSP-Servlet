@@ -6,22 +6,26 @@ import lombok.Data;
 
 import java.util.List;
 
-@Entity(name = "group")
+@Entity
+@Table(name = "`group`")
 @Data
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column
+
+    @Column(nullable = false)
     private String name;
+
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "admin", referencedColumnName = "id", nullable = false)
     private User admin;
-    @JsonIgnore // để tránh vòng lặp vô hạn khi lấy dữ liệu
+
+    @JsonIgnore
     @OneToMany(mappedBy = "group")
     private List<Joining> joinings;
-    @JsonIgnore // để tránh vòng lặp vô hạn khi lấy dữ liệu
+
+    @JsonIgnore
     @OneToMany(mappedBy = "group")
     private List<Message> messages;
-
 }
