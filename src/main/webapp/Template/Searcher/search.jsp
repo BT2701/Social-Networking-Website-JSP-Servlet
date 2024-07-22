@@ -6,6 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,35 +26,40 @@
 <div class="search-container">
     <div class="search-left">
         <div class="search-left-title">
-            <h2>Search results</h2>
+            <h2>Kết quả tìm kiếm</h2>
         </div>
         <div class="search-left-content">
-            <h3>Filters</h3>
-            <button class="btn" id="all"><i class="fa-solid fa-border-all"></i> All</button>
-            <button class="btn" id="posts"><i class="fa-solid fa-newspaper"></i>Posts</button>
-            <button class="btn" id="people"><i class="fa-solid fa-user"></i> People</button>
+            <h3>Bộ lọc</h3>
+            <button class="btn" id="all"><i class="fa-solid fa-border-all"></i> Tất cả</button>
+            <button class="btn" id="posts"><i class="fa-solid fa-newspaper"></i>Bài viết</button>
+            <button class="btn" id="people"><i class="fa-solid fa-user"></i> Người dùng</button>
         </div>
     </div>
     <div class="search-content">
         <!-- user -->
         <div class="search-content-user">
-            <div class="search-content-user-box">
-                <div class="search-content-user-box-left">
-                    <img src="${pageContext.request.contextPath}/Static/Images/pizzashop.png" alt="">
-                </div>
-                <div class="search-content-user-box-mid">
-                    <div class="search-content-user-box-mid-name">
-                        <a href="">Truong BT</a>
+            <c:forEach var="item" items="${result}">
+                <div class="search-content-user-box">
+                    <div class="search-content-user-box-left">
+                        <img src="${pageContext.request.contextPath}/Static/Images/pizzashop.png" alt="">
                     </div>
-                    <div class="search-content-user-box-mid-bonus">
-                        <li>100 Friends</li>
-                        <li>SaiGon University</li>
+                    <div class="search-content-user-box-mid">
+                        <div class="search-content-user-box-mid-name">
+                            <a href="">Truong BT</a>
+                        </div>
+                        <div class="search-content-user-box-mid-bonus">
+                            <li>100 Bạn bè</li>
+                            <li>Trường đại học Sài Gòn</li>
+                        </div>
+                    </div>
+                    <div class="search-content-user-box-right">
+                        <button class="btn btn-primary">Thêm bạn bè</button>
                     </div>
                 </div>
-                <div class="search-content-user-box-right">
-                    <button class="btn btn-primary">Add friend</button>
-                </div>
-            </div>
+            </c:forEach>
+
+        </div>
+
         </div>
         <!-- post -->
         <div class="search-content-post">
