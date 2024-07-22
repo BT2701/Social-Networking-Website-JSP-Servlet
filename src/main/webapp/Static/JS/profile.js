@@ -1,5 +1,9 @@
 let postToDelete = null;
 let postToUpdate = null;
+let postToLike = null;
+let postToUnLike = null;
+let postToComment = null;
+var userId = 1;
 
 // edit post
 const modalEditPost = document.getElementById('editPostModal');
@@ -14,18 +18,23 @@ const modalContent = document.querySelector(".modal-content-DeletePost");
 const cancelDelete = modal.querySelector("#cancelDelete");
 
 document.querySelectorAll('.post').forEach(post => {
+    // like and unlike
     const likeButton = post.querySelector('.like-button');
     const unlikeButton = post.querySelector('.unlike-button');
 
     likeButton.addEventListener('click', () => {
+        postToLike = post;
+        postToUnLike = null;
         likeButton.classList.remove('active');
         unlikeButton.classList.add('active');
     });
-
     unlikeButton.addEventListener('click', () => {
+        postToLike = null;
+        postToUnLike = post;
         unlikeButton.classList.remove('active');
         likeButton.classList.add('active');
     });
+
 
     // modal edit post
     const editPostButton = post.querySelector('.btn-edit');
@@ -35,11 +44,9 @@ document.querySelectorAll('.post').forEach(post => {
         postImagePreview.src = "";
         postToUpdate = null;
     });
-
     modalEditPostContent.addEventListener('click', (e) => {
         e.stopPropagation();
     });
-
     editPostButton.addEventListener('click', (e) => {
         // const postId = post.getAttribute('data-post-id');
         const postContent = post.querySelector('.post__desc p').innerText;
@@ -51,13 +58,11 @@ document.querySelectorAll('.post').forEach(post => {
         postToUpdate = post;
         modalEditPost.style.display = "block";
     });
-
     spanEditPost.onclick = function () {
         postToUpdate = null;
         modalEditPost.style.display = "none";
         postImagePreview.src = "";
     };
-
     postImageInput.addEventListener('change', (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -69,12 +74,22 @@ document.querySelectorAll('.post').forEach(post => {
         }
     });
 
+
     // comment
     const comment = post.querySelector(".post__comment");
     const commentBtn = post.querySelector(".commentBtn");
     commentBtn.addEventListener('click', (e) => {
+        post.querySelector(".post__comment-input input").value = "";
+
+        if(comment.classList.contains("display-none")) {
+            postToComment = post;
+        } else {
+            postToComment = null;
+        }
+
         comment.classList.toggle("display-none");
     })
+
 
     //delete post
     const deleteBtn = post.querySelector(".btn-delete");
@@ -85,17 +100,128 @@ document.querySelectorAll('.post').forEach(post => {
     modalContent.addEventListener('click', (e) => {
         e.stopPropagation();
     });
-
     deleteBtn.addEventListener('click', () => {
         postToDelete = post;
         modal.style.display = "block";
     });
-
     cancelDelete.addEventListener('click', () => {
         modal.style.display = "none";
         postToDelete = null;
     });
 });
+
+// comment
+document.querySelectorAll(".post__comment-input input").forEach(input => {
+    input.addEventListener('keyup', (event) => {
+        if (event.key === 'Enter') {
+            const submitButton = event.target.parentElement.querySelector(".submit-comment-Btn");
+            if (submitButton) {
+                submitButton.click();
+            }
+        }
+    });
+})
+document.querySelectorAll(".submit-comment-Btn").forEach(cmtBtn => {
+    cmtBtn.addEventListener("click", () => {
+        if(postToComment) {
+            const commentList = postToComment.querySelector(".post__comment-list");
+            const inputComment = postToComment.querySelector(".post__comment-input input");
+            const commentContent = inputComment.value;
+            const postId = postToComment.getAttribute("data-post-id");
+
+            const cmtPreview = postToComment.querySelector(".comment-preview");
+            const numOfLikes = parseInt(cmtPreview.textContent);
+
+            const formData = new FormData();
+            formData.append("userId", userId);
+            formData.append("postId", postId);
+            formData.append("commentContent", commentContent);
+
+            fetch(`/api/post/comment`, {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(comment => {
+                    const cmt = document.createElement('div');
+                    cmt.classList.add('post__comment-item');
+                    cmt.innerHTML = `
+                        <a href="/profile?userId=${comment.user.id}"><img src="/uploads/${comment.user.avt}" alt="post__comment"></a>
+                        <div>
+                            <a href="/profile?userId=${comment.user.id}"><h4>${comment.user.name}</h4></a>
+                            <p>${comment.content}</p>
+                        </div>
+                    `;
+
+                    cmtPreview.innerHTML = (numOfLikes + 1).toString();
+                    commentList.prepend(cmt);
+                    inputComment.value = "";
+                    // alert("Commented on the post successfully!");
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    })
+})
+
+
+// like and unlike post
+document.querySelectorAll(".like-button").forEach(likeBtn => {
+    likeBtn.addEventListener("click", () => {
+        if(postToLike) {
+            const postId = postToLike.getAttribute("data-post-id");
+
+            const likePreview = postToLike.querySelector(".like-preview");
+            const unLikePreview = postToLike.querySelector(".unlike-preview");
+            const numOfLikes = parseInt(likePreview.textContent);
+
+
+            fetch(`/api/post/like?userId=${userId}&postId=${postId}`, {
+                method: 'POST'
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message === "Like successful") {
+                        unLikePreview.innerHTML = (numOfLikes + 1).toString();
+
+                        // alert("Liked the post successfully!");
+                        postToLike = null;
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    })
+})
+document.querySelectorAll(".unlike-button").forEach(unLikeBtn => {
+    unLikeBtn.addEventListener("click", () => {
+        if(postToUnLike) {
+            const postId = postToUnLike.getAttribute("data-post-id");
+
+            const unLikePreview = postToUnLike.querySelector(".unlike-preview");
+            const likePreview = postToUnLike.querySelector(".like-preview");
+            const numOfLikes = parseInt(unLikePreview.textContent);
+
+            fetch(`/api/post/unLike?userId=${userId}&postId=${postId}`, {
+                method: 'POST'
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message === "UnLike successful") {
+                        likePreview.innerHTML = (numOfLikes - 1).toString();
+
+                        // alert("Liked the post successfully!");
+                        postToUnLike = null;
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    })
+})
+
+
 // delete post
 const confirmDelete = document.querySelectorAll("#confirmDelete");
 confirmDelete.forEach(cfDl => {
@@ -125,8 +251,6 @@ confirmDelete.forEach(cfDl => {
 
 // edit post
 const btnSaveEditPost = document.querySelector(".editPost__save-Btn");
-const formEditPost = document.getElementById("editPostForm");
-
 btnSaveEditPost.addEventListener('click', (e) => {
     e.preventDefault();
 
@@ -189,15 +313,12 @@ const modalFriendsContent = document.querySelector(".modal-content");
 modalFriendsContainer.onclick = () => {
     modalFriends.style.display = "none";
 }
-
 modalFriendsContent.onclick = function(e) {
     e.stopPropagation();
 }
-
 btn.onclick = function() {
     modalFriends.style.display = "block";
 }
-
 span.onclick = function() {
     modalFriends.style.display = "none";
 }
@@ -213,21 +334,16 @@ const spanEditProfile = document.getElementsByClassName("close2")[0];
 modalContainer.onclick = () => {
     modalEditProfile.style.display = "none";
 }
-
 modalEditProfileContent.onclick = function(e) {
     e.stopPropagation();
 }
-
 btnEditProfile.onclick = function() {
     modalEditProfile.style.display = "block";
 }
-
 spanEditProfile.onclick = function() {
     modalEditProfile.style.display = "none";
 }
-
 const editProfileForm = document.getElementById('editProfileForm2');
-const userId = document.querySelector(".editProfileForm2-btn-submit").getAttribute("data-user-id");
 editProfileForm.onsubmit = function(event) {
     event.preventDefault();
 
@@ -409,22 +525,18 @@ modalEditAvatar.addEventListener('click', () => {
     modalEditAvatar.style.display = "none";
     avatarImagePreview.src = "";
 });
-
 modalEditAvatarContent.addEventListener('click', (e) => {
     e.stopPropagation();
 });
-
 editAvatarButton.addEventListener('click', () => {
     avatarImagePreview.src = document.querySelector(".profile__avatar").src;
 
     modalEditAvatar.style.display = "block";
 });
-
 spanEditAvatar.onclick = function () {
     modalEditAvatar.style.display = "none";
     avatarImagePreview.src = "";
 };
-
 avatarImageInput.addEventListener('change', (event) => {
     const file = event.target.files[0];
     if (file) {

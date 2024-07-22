@@ -32,4 +32,7 @@ public class Post {
     @JsonIgnore // để tránh vòng lặp vô hạn khi lấy dữ liệu
     @OneToMany(mappedBy = "post")
     private List<Reaction> reactions;
+
+    @Transient
+    private boolean likedByUser;
 }

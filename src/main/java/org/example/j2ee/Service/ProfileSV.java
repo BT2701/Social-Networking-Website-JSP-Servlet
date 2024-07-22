@@ -85,80 +85,74 @@ public class ProfileSV {
         EntityTransaction transaction = em.getTransaction();
         try {
             transaction.begin();
-            List<Comment> comments = null;
-            String jpql = "SELECT c FROM Comment c WHERE c.post.id = :postId ORDER BY c.timeline ASC ";
-            TypedQuery<Comment> query = em.createQuery(jpql, Comment.class);
-            query.setParameter("postId", postId);
-            comments = query.getResultList();
+            List<Comment> comments = em.createQuery("SELECT c FROM Comment c WHERE c.post.id = :postId ORDER BY c.timeline DESC")
+                    .setParameter("postId", postId)
+                    .getResultList();
             transaction.commit();
             return comments;
         } catch (Exception e) {
             if (transaction.isActive()) {
                 transaction.rollback();
             }
-            e.printStackTrace(); // Log lỗi chi tiết
+            e.printStackTrace();
             throw new RuntimeException(e);
-        }
-        finally {
+        } finally {
             em.close();
         }
     }
+
 
     public List<Reaction> getReactionsByPostId(int postId) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         EntityTransaction transaction = em.getTransaction();
         try {
             transaction.begin();
-            List<Reaction> reactions = null;
-            String jpql = "SELECT r FROM Reaction r WHERE r.post.id = :postId";
-            TypedQuery<Reaction> query = em.createQuery(jpql, Reaction.class);
-            query.setParameter("postId", postId);
-            reactions = query.getResultList();
+            List<Reaction> reactions = em.createQuery("SELECT r FROM Reaction r WHERE r.post.id = :postId")
+                    .setParameter("postId", postId)
+                    .getResultList();
             transaction.commit();
             return reactions;
         } catch (Exception e) {
-            if(transaction.isActive()) {
+            if (transaction.isActive()) {
                 transaction.rollback();
             }
             e.printStackTrace();
             throw new RuntimeException(e);
-        }
-        finally {
+        } finally {
             em.close();
         }
     }
+
 
     public List<Post> getPostsFromUserId(int userId) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         EntityTransaction transaction = em.getTransaction();
         try {
             transaction.begin();
-            List<Post> posts = null;
-            String jpql = "SELECT p FROM Post p WHERE p.user.id = :userId";
-            TypedQuery<Post> query = em.createQuery(jpql, Post.class);
-            query.setParameter("userId", userId);
-            posts = query.getResultList();
+            List<Post> posts = em.createQuery("SELECT p FROM Post p WHERE p.user.id = :userId")
+                    .setParameter("userId", userId)
+                    .getResultList();
 
-            // Nạp comment và reaction cho từng post
             posts.forEach(post -> {
                 post.setComments(getCommentsByPostId(post.getId()));
                 post.setReactions(getReactionsByPostId(post.getId()));
+
+                post.setLikedByUser(post.getReactions().stream().anyMatch(r -> r.getUser().getId() == userId));
             });
 
             transaction.commit();
             return posts;
-        }
-        catch (Exception e) {
-            if(transaction.isActive()) {
+        } catch (Exception e) {
+            if (transaction.isActive()) {
                 transaction.rollback();
             }
             e.printStackTrace();
             throw new RuntimeException(e);
-        }
-        finally {
+        } finally {
             em.close();
         }
     }
+
 
     public List<User> getFriendsFromUserId(int userId) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
