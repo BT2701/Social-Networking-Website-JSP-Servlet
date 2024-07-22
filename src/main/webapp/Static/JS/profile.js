@@ -123,7 +123,7 @@ confirmDelete.forEach(cfDl => {
     });
 })
 
-// update post
+// edit post
 const btnSaveEditPost = document.querySelector(".editPost__save-Btn");
 const formEditPost = document.getElementById("editPostForm");
 
@@ -151,7 +151,7 @@ btnSaveEditPost.addEventListener('click', (e) => {
 
     const postId = postToUpdate.getAttribute("data-post-id");
     fetch(`/api/post?postId=${postId}`, {
-        method: 'POST',
+        method: 'PUT',
         body: formData
     })
         .then(response => {
@@ -385,7 +385,7 @@ btnSaveEditAvatar.addEventListener('click', (e) => {
     }
 
     const formData = new FormData(formEditAvatar);
-    fetch(`/api/upload?userId=${userId}`, {
+    fetch(`/api/uploadAvatar?userId=${userId}`, {
         method: 'POST',
         body: formData
     })

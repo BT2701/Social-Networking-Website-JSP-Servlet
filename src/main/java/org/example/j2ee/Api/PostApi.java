@@ -8,13 +8,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import org.example.j2ee.Model.Post;
-import org.example.j2ee.Model.User;
 import org.example.j2ee.Service.PostSV;
-import org.example.j2ee.Service.ProfileSV;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet("/api/post")
 @MultipartConfig(maxFileSize = 5242880, maxRequestSize = 10485760)
@@ -27,13 +24,13 @@ public class PostApi extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
 
         Part filePart = req.getPart("postImage");
         String fileName = "";
         if (filePart != null && filePart.getSize() > 0) {
-            fileName = UploadApi.uploadImage(req, resp, "postImage");
+            fileName = UploadAvatarApi.uploadImage(req, resp, "postImage");
         }
 
         int postId = Integer.parseInt(req.getParameter("postId"));
