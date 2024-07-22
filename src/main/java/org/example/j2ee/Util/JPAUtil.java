@@ -1,14 +1,15 @@
 package org.example.j2ee.Util;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 
 public class JPAUtil {
-    private static final EntityManagerFactory entityManagerFactory = buildEntityManagerFactory();
+    private static final String PERSISTENCE_UNIT_NAME = "examplePU";
+    private static EntityManagerFactory entityManagerFactory;
 
-    private static EntityManagerFactory buildEntityManagerFactory() {
+    static {
         try {
-            return Persistence.createEntityManagerFactory("examplePU");
+            entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
         } catch (Throwable ex) {
             throw new ExceptionInInitializerError(ex);
         }
@@ -19,6 +20,8 @@ public class JPAUtil {
     }
 
     public static void shutdown() {
-        getEntityManagerFactory().close();
+        if (entityManagerFactory != null) {
+            entityManagerFactory.close();
+        }
     }
 }
