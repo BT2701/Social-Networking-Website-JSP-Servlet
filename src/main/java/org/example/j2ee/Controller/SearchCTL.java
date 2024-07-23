@@ -20,13 +20,19 @@ public class SearchCTL extends HttpServlet {
         searchSV= new SearchSV();
     }
 
-    @Override
     @SneakyThrows
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String keyword = request.getParameter("keyword");
         String type = request.getParameter("type");
+        if (keyword==null){
+            keyword="tr";
+        }
+        if (type==null){
+            type="all";
+        }
         HashMap<String, Object> result= searchSV.search(keyword, type);
-        request.setAttribute("result", result);
-        request.getRequestDispatcher("/Template/Searcher/search.jsp").forward(request, response);
+        request.setAttribute("users", result.get("users"));
+        request.setAttribute("posts", result.get("posts"));
+        request.getRequestDispatcher("/Template/Home/home.jsp").forward(request, response);
     }
 }
