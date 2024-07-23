@@ -1,12 +1,5 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: duong
-  Date: 7/12/2024
-  Time: 4:34 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <!DOCTYPE html>
@@ -30,15 +23,16 @@
         </div>
         <div class="search-left-content">
             <h3>Bộ lọc</h3>
-            <button class="btn" id="all"><i class="fa-solid fa-border-all"></i> Tất cả</button>
-            <button class="btn" id="posts"><i class="fa-solid fa-newspaper"></i>Bài viết</button>
-            <button class="btn" id="people"><i class="fa-solid fa-user"></i> Người dùng</button>
+            <button class="btn" data-type="all"><i class="fa-solid fa-border-all"></i> Tất cả</button>
+            <button class="btn" data-type="post"><i class="fa-solid fa-newspaper"></i>Bài viết</button>
+            <button class="btn" data-type="user"><i class="fa-solid fa-user"></i> Người dùng</button>
         </div>
     </div>
     <div class="search-content">
         <!-- user -->
         <div class="search-content-user">
-            <c:forEach var="item" items="${result}">
+            <c:if test="${users.size() !=0}">
+            <c:forEach var="item" items="${users}">
                 <div class="search-content-user-box">
                     <div class="search-content-user-box-left">
                         <img src="${pageContext.request.contextPath}/Static/Images/pizzashop.png" alt="">
@@ -57,12 +51,15 @@
                     </div>
                 </div>
             </c:forEach>
+                </c:if>
 
         </div>
 
         </div>
         <!-- post -->
         <div class="search-content-post">
+            <c:if test="${posts.size()!=0}">
+            <c:forEach var="item" items="${posts}">
             <div class="search-content-post-box">
                 <div class="search-content-post-header">
                     <div class="search-content-post-header-left">
@@ -91,9 +88,12 @@
                     </div>
                 </div>
             </div>
+            </c:forEach>
+            </c:if>
         </div>
     </div>
 </div>
+<script src="${pageContext.request.contextPath}/Static/JS/search.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
