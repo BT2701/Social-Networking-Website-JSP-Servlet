@@ -24,15 +24,17 @@ public class SearchCTL extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String keyword = request.getParameter("keyword");
         String type = request.getParameter("type");
+        int currentUser= 1; // lay du lieu tu cookie
         if (keyword==null){
-            keyword="tr";
+            keyword=" ";
         }
         if (type==null){
             type="all";
         }
-        HashMap<String, Object> result= searchSV.search(keyword, type);
+        HashMap<String, Object> result= searchSV.search(keyword, type, currentUser);
         request.setAttribute("users", result.get("users"));
         request.setAttribute("posts", result.get("posts"));
-        request.getRequestDispatcher("/Template/Home/home.jsp").forward(request, response);
+        request.setAttribute("friends", result.get("friends"));
+        request.getRequestDispatcher("/Template/Searcher/search.jsp").forward(request, response);
     }
 }

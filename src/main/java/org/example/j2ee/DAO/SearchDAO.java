@@ -25,5 +25,12 @@ public class SearchDAO {
         query.setParameter("subName", "%" + subName + "%");
         return query.getResultList();
     }
+    public List<User> getFriends(int currentUser){
+        String queryStr = "SELECT u FROM User u inner join Friend f on u.id=f.user2 WHERE f.user1 = :currentUser";
+        TypedQuery<User> query = entityManager.createQuery(queryStr, User.class);
+        query.setParameter("currentUser", currentUser);
+        return query.getResultList();
+    }
+
 
 }
