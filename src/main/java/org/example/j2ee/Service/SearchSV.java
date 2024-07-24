@@ -12,10 +12,12 @@ public class SearchSV {
     public SearchSV() {
         searchDAO = new SearchDAO();
     }
-    public HashMap<String, Object> search(String keyword, String type) {
+    public HashMap<String, Object> search(String keyword, String type, int currentUser) {
         HashMap<String, Object> result = new HashMap<>();
         List<Post> posts=searchDAO.getPosts(keyword);
         List<User> users=searchDAO.getUsers(keyword);
+        List<User> friends= searchDAO.getFriends(currentUser);
+        result.put("friends", friends);
         if(type.equalsIgnoreCase("post")){
             result.put("posts",posts);
             return result;
