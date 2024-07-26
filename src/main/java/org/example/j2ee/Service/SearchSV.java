@@ -17,6 +17,23 @@ public class SearchSV {
         List<Post> posts=searchDAO.getPosts(keyword);
         List<User> users=searchDAO.getUsers(keyword);
         List<User> friends= searchDAO.getFriends(currentUser);
+
+
+        int index=0;
+        for(int i=0;i <users.size();i++){
+            if(users.get(i).getId()==currentUser){
+                index=i;
+            }
+        }
+        users.remove(index);
+
+        for(Post post:posts){
+            if(post.getUser().getId()==currentUser){
+                post.setOwner(true);
+            }
+            else post.setOwner(false);
+        }
+
         result.put("friends", friends);
         if(type.equalsIgnoreCase("post")){
             result.put("posts",posts);

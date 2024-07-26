@@ -23,7 +23,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="search-container">
+<div class="search-container" id="search-container">
     <div class="search-left">
         <div class="search-left-title">
             <h2>Kết quả tìm kiếm</h2>
@@ -35,7 +35,7 @@
             <button class="btn" datatype="user"><i class="fa-solid fa-user"></i> Người dùng</button>
         </div>
     </div>
-    <div class="search-content">
+    <div class="search-content" id="search-content">
         <!-- user -->
         <div class="search-content-user">
             <c:if test="${users.size() !=0}">
@@ -46,7 +46,7 @@
                 </div>
                 <div class="search-content-user-box-mid">
                     <div class="search-content-user-box-mid-name">
-                        <a href="">${item.name}</a>
+                        <a href="${pageContext.request.contextPath}/profile?userId=${item.id}">${item.name}</a>
                     </div>
                     <div class="search-content-user-box-mid-bonus">
                         <li>100 Friends</li>
@@ -54,15 +54,18 @@
                     </div>
                 </div>
                 <div class="search-content-user-box-right">
-<%--                    <c:if test="${friends.size() !=0}">--%>
-<%--                        <c:forEach var="friend" items="${friends}">--%>
-<%--                            <c:if test="${item.id == friend.id}">--%>
-<%--                                --%>
-<%--                            </c:if>--%>
-<%--                        </c:forEach>--%>
-<%--                    </c:if>--%>
-                    <button class="btn btn-primary add-friend">Add friend</button>
+                    <c:set var="text" value="Thêm bạn bè" />
+                    <c:if test="${friends.size() != 0}">
+                        <c:forEach var="friend" items="${friends}">
+                            <c:if test="${item.id == friend.id}">
+                                <c:set var="text" value="Hủy kết bạn" />
+                                <!-- Chúng ta không thể break, nhưng có thể tiếp tục để text có giá trị đúng -->
+                            </c:if>
+                        </c:forEach>
+                    </c:if>
+                    <button class="btn btn-primary add-friend">${text}</button>
                 </div>
+
             </div>
                 </c:forEach>
             </c:if>
@@ -77,11 +80,13 @@
                         <img src="${pageContext.request.contextPath}/Static/Images/${item.user.avt}" alt="">
                     </div>
                     <div class="search-content-post-header-mid">
-                        <a href="">${item.user.name}</a>
+                        <a href="${pageContext.request.contextPath}/profile?userId=${item.user.id}">${item.user.name}</a>
                         <li>${item.getTimePost()}</li>
                     </div>
                     <div class="search-content-post-header-right">
+                        <c:if test="${item.owner}">
                         <button class="btn"><i class="fa-solid fa-ellipsis"></i></button>
+                        </c:if>
                     </div>
                 </div>
                 <div class="search-content-post-mid">
