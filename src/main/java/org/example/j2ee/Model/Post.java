@@ -39,6 +39,9 @@ public class Post {
     @Transient
     private boolean likedByUser;
 
+    @Transient
+    private boolean owner;
+
     public String getTimePost(){
         Timestamp currentTime = new Timestamp(System.currentTimeMillis());
         long diffInMillis = currentTime.getTime() - timeline.getTime();
