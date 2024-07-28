@@ -1,8 +1,12 @@
+html, body {
+    overflow: hidden;
+}
+
 /* navbar */
 .search-container{
     display: flex;
     width: 100vw;
-
+    overflow: hidden;
 }
 .search-left{
     position: fixed;
@@ -15,6 +19,7 @@
     left: 0.5em;
     border-right: 1px solid beige;
     height: 100%;
+    overflow: hidden;
 }
 .search-left-title{
     display: flex;
@@ -46,11 +51,12 @@
     display: flex;
     max-width: 80%;
     width: 100%;
-    height: auto;
+    height: 100vh;
     flex-direction: column;
     position: absolute;
     left: 21%;
     background-color: rgba(174, 167, 167, 0.8);
+    overflow-y: auto;
 }
 /* user */
 .search-content-user, .search-content-post{
@@ -106,7 +112,10 @@
     list-style-type: none;
 }
 .search-content-user-box-right{
-    margin-left: 11em;
+    /*margin-left: 11em;*/
+    /*margin-right: calc(1em - 1em);*/
+    position: absolute;
+    right: 23%;
 }
 
 
@@ -123,13 +132,14 @@
 .search-content-post-header{
     display: flex;
     justify-content: left;
-
+    margin-top: 1em;
 }
 .search-content-post-header-right{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 58%;
+    position: absolute;
+    right: 23%;
 }
 .search-content-post-mid{
     display: flex;

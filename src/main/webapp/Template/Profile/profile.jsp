@@ -119,15 +119,15 @@
                             </div>
                         </c:if>
                         <div class="post__action">
-                            <div class="like-button active">
-                                <button><i class="fa-regular fa-heart"></i> Thích (${fn:length(post.reactions)})</button>
+                            <div class="like-button ${post.likedByUser ? '' : 'active'}">
+                                <button><i class="fa-regular fa-heart"></i> Thích (<span class="like-preview">${fn:length(post.reactions)}</span>)</button>
                             </div>
-                            <div class="unlike-button">
-                                <button><i class="fa-solid fa-heart"></i> Bỏ thích (${fn:length(post.reactions)})</button>
+                            <div class="unlike-button ${post.likedByUser ? 'active' : ''}">
+                                <button><i class="fa-solid fa-heart"></i> Bỏ thích (<span class="unlike-preview">${fn:length(post.reactions)}</span>)</button>
                             </div>
 
                             <div>
-                                <button class="commentBtn"><i class="fa-regular fa-comment"></i> Bình luận (${fn:length(post.comments)})</button>
+                                <button class="commentBtn"><i class="fa-regular fa-comment"></i> Bình luận (<span class="comment-preview">${fn:length(post.comments)}</span>)</button>
                             </div>
                         </div>
                         <div class="post__comment display-none">
@@ -249,7 +249,7 @@
                         </select>
                     </div>
 
-                    <button data-user-id="${user.id}" class="editProfileForm2-btn-submit" type="submit">Lưu</button>
+                    <button class="editProfileForm2-btn-submit" type="submit">Lưu</button>
                 </form>
             </div>
         </div>

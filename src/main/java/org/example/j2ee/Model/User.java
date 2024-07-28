@@ -96,4 +96,7 @@ public class User {
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Reaction> reactions;
+
+    @Transient
+    private Long friendsCount;
 }
