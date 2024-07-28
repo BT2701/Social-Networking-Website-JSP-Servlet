@@ -67,7 +67,7 @@
                             </c:if>
                         </c:forEach>
                     </c:if>
-                    <button class="btn btn-primary add-friend">${text}</button>
+                    <button class="btn btn-primary add-friend" data-friend-id="${item.id}">${text}</button>
                 </div>
 
             </div>
