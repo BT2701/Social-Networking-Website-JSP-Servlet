@@ -2,6 +2,7 @@ package org.example.j2ee.DAO;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
+import org.example.j2ee.Model.Friend;
 import org.example.j2ee.Model.User;
 import org.example.j2ee.Util.JPAUtil;
 
@@ -34,5 +35,19 @@ public class FriendDAO {
         TypedQuery<User> query = entityManager.createQuery(queryStr, User.class);
         query.setParameter("userId", currentUser);
         return query.getResultList();
+    }
+    public boolean addFriend(int user1, int user2){
+        String queryStr = "INSERT INTO Friend(user1, user2, isfriend) VALUES (:user1, :user2, 0)";
+        TypedQuery<Friend> query = entityManager.createQuery(queryStr, Friend.class);
+        query.setParameter("user1", user1);
+        query.setParameter("user2", user2);
+        return query.executeUpdate() > 0;
+    }
+    public boolean removeFriend(int user1, int user2){
+        String queryStr = "DELETE FROM Friend WHERE (user1 = :user1 AND user2 = :user2) or (user1 = :user2 AND user2 = :user1)";
+        TypedQuery<Friend> query = entityManager.createQuery(queryStr, Friend.class);
+        query.setParameter("user1", user1);
+        query.setParameter("user2", user2);
+        return query.executeUpdate() > 0;
     }
 }

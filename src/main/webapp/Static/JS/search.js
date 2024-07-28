@@ -57,3 +57,37 @@ document.addEventListener('DOMContentLoaded', function (){
 
 
 });
+document.querySelectorAll('.btn.btn-primary.add-friend').forEach(button => {
+    button.addEventListener('click', function() {
+        const action = this.innerText.trim();
+        const friendId = this.getAttribute('data-friend-id');
+
+        let url = '';
+        if (action === 'Thêm bạn bè') {
+            url = `${window.location.origin}/search/addFriend`;
+        } else if (action === 'Hủy kết bạn') {
+            url = `${window.location.origin}/search/removeFriend`;
+        }
+
+        if (url) {
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ friendId: friendId })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Cập nhật nút và giao diện người dùng nếu cần thiết
+                        this.innerText = action === 'Thêm bạn bè' ? 'Hủy kết bạn' : 'Thêm bạn bè';
+                    } else {
+                        // Xử lý lỗi nếu có
+                        console.error('Action failed');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    });
+});

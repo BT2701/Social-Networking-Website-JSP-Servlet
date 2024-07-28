@@ -59,4 +59,12 @@ public class SearchSV {
         }
     }
 
+    public boolean checkAddFriend(int currentUser, String friendId) {
+        int friend=Integer.parseInt(friendId);
+        return friendDAO.addFriend(currentUser, friend); // hoặc false nếu có lỗi
+    }
+    public boolean checkRemoveFriend(int currentUser,String friendId) {
+        int friend=Integer.parseInt(friendId);
+        return friendDAO.removeFriend(currentUser, friend); // hoặc false nếu có lỗi
+    }
 }
