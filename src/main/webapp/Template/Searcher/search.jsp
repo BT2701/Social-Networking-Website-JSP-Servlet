@@ -49,7 +49,11 @@
                         <a href="${pageContext.request.contextPath}/profile?userId=${item.id}">${item.name}</a>
                     </div>
                     <div class="search-content-user-box-mid-bonus">
-                        <li>100 Friends</li>
+                        <c:set var="friendNum" value="0 Bạn bè"></c:set>
+                        <c:if test="${item.friendsCount > 0}">
+                            <c:set var="friendNum" value="${item.friendsCount} Bạn bè"></c:set>
+                        </c:if>
+                        <li>${friendNum}</li>
                         <li>${item.education}</li>
                     </div>
                 </div>
@@ -95,8 +99,16 @@
                 </div>
                 <div class="search-content-post-footer">
                     <div class="search-content-post-footer-top">
-                        <li><i class="fa-solid fa-heart"></i> <span>you and 100 others</span></li>
-                        <li>500 comments</li>
+                        <c:set var="numCmts" value="0 Bình luận"></c:set>
+                        <c:if test="${item.getNumComments()>0}">
+                            <c:set var="numCmts" value="${item.getNumComments()} Bình luận"></c:set>
+                        </c:if>
+                        <c:set var="numReactions" value="0 Lượt thích"></c:set>
+                        <c:if test="${item.getNumReactions()>0}">
+                            <c:set var="numReactions" value="${item.getNumReactions()} Lượt thích"></c:set>
+                        </c:if>
+                        <li><i class="fa-solid fa-heart"></i> <span>${numReactions}</span></li>
+                        <li>${numCmts}</li>
                     </div>
                     <div class="search-content-post-footer-bot">
                         <button class="btn"><i class="fa-regular fa-heart"></i>Like</button>

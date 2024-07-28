@@ -69,4 +69,11 @@ public class Post {
         }
         return result;
     }
+
+    public int getNumComments(){
+        return comments.size();
+    }
+    public int getNumReactions(){
+        return reactions.size();
+    }
 }
