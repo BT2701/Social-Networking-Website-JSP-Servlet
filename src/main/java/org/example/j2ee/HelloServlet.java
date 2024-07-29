@@ -13,7 +13,7 @@ public class HelloServlet extends HttpServlet {
 
     @SneakyThrows
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        request.getRequestDispatcher("/Template/Searcher/search.jsp").forward(request, response);
+        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -17,9 +17,9 @@ import jakarta.servlet.http.Part;
 import org.example.j2ee.Model.User;
 import org.example.j2ee.Service.ProfileSV;
 
-@WebServlet("/api/upload")
+@WebServlet("/api/uploadAvatar")
 @MultipartConfig(maxFileSize = 5242880, maxRequestSize = 10485760)
-public class UploadApi extends HttpServlet {
+public class UploadAvatarApi extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -60,7 +60,7 @@ public class UploadApi extends HttpServlet {
             throws IOException, ServletException {
         response.setContentType("application/json");
 
-        String fileName = UploadApi.uploadImage(request, response, "avatarImage");
+        String fileName = UploadAvatarApi.uploadImage(request, response, "avatarImage");
 
         int userId = Integer.parseInt(request.getParameter("userId"));
         ProfileSV userDAO = new ProfileSV();
