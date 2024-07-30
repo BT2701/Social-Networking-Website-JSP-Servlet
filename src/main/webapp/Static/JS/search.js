@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function changeColorBtn() {
-        document.querySelectorAll('.add-friend').forEach(button => {
+        document.querySelectorAll('.handle-request').forEach(button => {
             const buttonText = button.textContent; // Sử dụng textContent
 
             if (buttonText.trim() === "Remove friend") {
@@ -49,18 +49,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 document.addEventListener('DOMContentLoaded', function (){
-    document.querySelectorAll('.add-friend').forEach(button=>{
+    document.querySelectorAll('.handle-request').forEach(button=>{
         const buttonText = button.textContent; // Sử dụng textContent
 
         if (buttonText.trim() === "Remove friend") {
             button.classList.remove('btn-primary'); // Loại bỏ lớp btn-primary
             button.classList.add('btn-danger');     // Thêm lớp btn-danger
         }
+        else if (buttonText.trim() === "Confirm"){
+            button.classList.remove('btn-primary'); // Loại bỏ lớp btn-primary
+            button.classList.add('btn-success');     // Thêm lớp btn-danger
+        }
+        else if(buttonText.trim()=== "Cancel request"){
+            button.classList.remove('btn-primary'); // Loại bỏ lớp btn-primary
+            button.classList.add('btn-secondary');
+        }
     });
 
 
 });
-document.querySelectorAll('.btn.btn-primary.add-friend').forEach(button => {
+document.querySelectorAll('.btn.btn-primary.handle-request').forEach(button => {
     button.addEventListener('click', function() {
         const action = this.innerText.trim();
         const friendId = this.getAttribute('data-friend-id');
