@@ -42,6 +42,8 @@ public class SearchCTL extends HttpServlet {
         request.setAttribute("users", result.get("users"));
         request.setAttribute("posts", result.get("posts"));
         request.setAttribute("friends", result.get("friends"));
+        request.setAttribute("responseStack", result.get("responseStack"));
+        request.setAttribute("requestList", result.get("requestList"));
 //        request.setAttribute("confirms", result.get("confirms"));
         request.getRequestDispatcher("/Template/Searcher/search.jsp").forward(request, response);
     }

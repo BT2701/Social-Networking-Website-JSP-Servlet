@@ -73,17 +73,25 @@
                             </c:if>
                         </c:forEach>
                     </c:if>
-<%--                    <c:if test="${confirms.size() != 0}">--%>
-<%--                        <c:forEach var="confirm" items="${confirms}">--%>
-<%--                            <c:if test="${item.id == confirm.id}">--%>
-<%--                                <c:set var="text" value="Confirm" />--%>
-<%--                            </c:if>--%>
-<%--                        </c:forEach>--%>
-<%--                    </c:if>--%>
-<%--                    <c:if test="${text.equals('Confirm')}">--%>
-<%--                        <button class="btn btn-primary refuse" data-friend-id="${item.id}">Refuse</button>--%>
-<%--                    </c:if>--%>
-                    <button class="btn btn-primary add-friend" data-friend-id="${item.id}">${text}</button>
+                    <c:if test="${responseStack.size() != 0}">
+                        <c:forEach var="responseItem" items="${responseStack}">
+                            <c:if test="${item.id == responseItem.sender}">
+                                <c:set var="text" value="Confirm" />
+                            </c:if>
+                        </c:forEach>
+                    </c:if>
+                    <c:if test="${requestList.size() != 0}">
+                        <c:forEach var="requestItem" items="${requestList}">
+                            <c:if test="${item.id == requestItem.receiver}">
+                                <c:set var="text" value="Cancel request" />
+                            </c:if>
+                        </c:forEach>
+                    </c:if>
+
+                    <c:if test="${text.equals('Confirm')}">
+                        <button class="btn btn-warning refuse" data-friend-id="${item.id}">Refuse</button>
+                    </c:if>
+                    <button class="btn btn-primary handle-request" data-friend-id="${item.id}">${text}</button>
                 </div>
 
             </div>

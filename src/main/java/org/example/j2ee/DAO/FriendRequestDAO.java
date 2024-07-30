@@ -17,24 +17,16 @@ public class FriendRequestDAO {
         entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
     }
     public List<FriendRequest> requestList(int currentUser) {
-        EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
-        EntityTransaction transaction = em.getTransaction();
-        transaction.begin();
-        Query query = em.createQuery("select rq from FriendRequest rq where rq.sender = :currentUser");
+        Query query = entityManager.createQuery("select rq from FriendRequest rq where rq.sender = :currentUser");
         query.setParameter("currentUser", currentUser);
         List<FriendRequest> friendRequests = query.getResultList();
-        transaction.commit();
         return friendRequests;
 //        TypedQuery<User> query = entityManager.createQuery(queryStr, User.class);
     }
     public List<FriendRequest> responseStack(int currentUser) {
-        EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
-        EntityTransaction transaction = em.getTransaction();
-        transaction.begin();
-        Query query = em.createQuery("select rq from FriendRequest rq where rq.receiver = :currentUser");
+        Query query = entityManager.createQuery("select rq from FriendRequest rq where rq.receiver = :currentUser");
         query.setParameter("currentUser", currentUser);
         List<FriendRequest> friendRequests = query.getResultList();
-        transaction.commit();
         return friendRequests;
     }
     public boolean sendFriendRequest(FriendRequest friendRequest) {
