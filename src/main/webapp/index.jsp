@@ -16,7 +16,7 @@
 <body>
 <h1><%= "Hello World!" %></h1>
 <br/>
-<a href="search">Hello Servlet</a>
+<a href="search">Search page</a>
 <br><br>
 <a href="profile?userId=1">Profile</a>
 <a href="login">login</a>

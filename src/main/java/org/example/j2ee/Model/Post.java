@@ -53,7 +53,7 @@ public class Post {
         long diffInDays = TimeUnit.MILLISECONDS.toDays(diffInMillis);
         if (diffInDays > 0) {
             if(diffInDays <= 7){
-                result = diffInDays + " ngày trước";
+                result = diffInDays + "d";
             }
             else {
                 SimpleDateFormat formatter = new SimpleDateFormat("MMMM dd, yyyy");
@@ -61,11 +61,11 @@ public class Post {
             }
         }
         else if (diffInHours > 0) {
-            result= diffInHours + " giờ trước";
+            result= diffInHours + "h";
         } else if (diffInMinutes > 0) {
-            result= diffInMinutes + " phút trước";
+            result= diffInMinutes + "m";
         } else {
-            result= diffInSeconds + " giây trước";
+            result= diffInSeconds + "s";
         }
         return result;
     }
