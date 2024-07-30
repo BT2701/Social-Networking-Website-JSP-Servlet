@@ -2,15 +2,16 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.search-left-content .btn').forEach(button => {
         button.addEventListener('click', function() {
             const type = this.getAttribute('datatype');
-            fetchResults(type);
-            changeColorBtn();
+            fetchResults(type).then(() => {
+                changeColorBtn();
+            });
         });
     });
 
     function fetchResults(type) {
         const keyword = ' '; // Fixed keyword
 
-        fetch(`${window.location.origin}/search?keyword=${keyword}&type=${type}`)
+        return fetch(`${window.location.origin}/search?keyword=${keyword}&type=${type}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -28,16 +29,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (resultContainer) {
                     resultContainer.innerHTML = content.innerHTML; // Chèn mã HTML vào phần tử
                 } else {
-                    console.error('Element with id "search-container" not found.');
+                    console.error('Element with id "search-content" not found.');
                 }
             })
             .catch(error => console.error('Error fetching results:', error));
     }
-    function changeColorBtn(){
-        document.querySelectorAll('.add-friend').forEach(button=>{
+
+    function changeColorBtn() {
+        document.querySelectorAll('.add-friend').forEach(button => {
             const buttonText = button.textContent; // Sử dụng textContent
 
-            if (buttonText.trim() === "Hủy kết bạn") {
+            if (buttonText.trim() === "Remove friend") {
                 button.classList.remove('btn-primary'); // Loại bỏ lớp btn-primary
                 button.classList.add('btn-danger');     // Thêm lớp btn-danger
             }
@@ -45,11 +47,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+
 document.addEventListener('DOMContentLoaded', function (){
     document.querySelectorAll('.add-friend').forEach(button=>{
         const buttonText = button.textContent; // Sử dụng textContent
 
-        if (buttonText.trim() === "Hủy kết bạn") {
+        if (buttonText.trim() === "Remove friend") {
             button.classList.remove('btn-primary'); // Loại bỏ lớp btn-primary
             button.classList.add('btn-danger');     // Thêm lớp btn-danger
         }
@@ -63,9 +66,9 @@ document.querySelectorAll('.btn.btn-primary.add-friend').forEach(button => {
         const friendId = this.getAttribute('data-friend-id');
 
         let url = '';
-        if (action === 'Thêm bạn bè') {
+        if (action === 'Add friend') {
             url = `${window.location.origin}/search/addFriend`;
-        } else if (action === 'Hủy kết bạn') {
+        } else if (action === 'Remove friend') {
             url = `${window.location.origin}/search/removeFriend`;
         }
 
@@ -81,7 +84,7 @@ document.querySelectorAll('.btn.btn-primary.add-friend').forEach(button => {
                 .then(data => {
                     if (data.success) {
                         // Cập nhật nút và giao diện người dùng nếu cần thiết
-                        this.innerText = action === 'Thêm bạn bè' ? 'Hủy kết bạn' : 'Thêm bạn bè';
+                        this.innerText = action === 'Add friend' ? 'Remove friend' : 'Add friend';
                     } else {
                         // Xử lý lỗi nếu có
                         console.error('Action failed');

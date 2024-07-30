@@ -1,7 +1,9 @@
 package org.example.j2ee.Service;
 
 import org.example.j2ee.DAO.FriendDAO;
+import org.example.j2ee.DAO.FriendRequestDAO;
 import org.example.j2ee.DAO.SearchDAO;
+import org.example.j2ee.Model.FriendRequest;
 import org.example.j2ee.Model.Post;
 import org.example.j2ee.Model.User;
 
@@ -11,16 +13,19 @@ import java.util.List;
 public class SearchSV {
     private SearchDAO searchDAO;
     private FriendDAO friendDAO;
+    private FriendRequestDAO friendRequestDAO;
     public SearchSV() {
         searchDAO = new SearchDAO();
         friendDAO = new FriendDAO();
+        friendRequestDAO = new FriendRequestDAO();
     }
     public HashMap<String, Object> search(String keyword, String type, int currentUser) {
         HashMap<String, Object> result = new HashMap<>();
         List<Post> posts=searchDAO.getPosts(keyword);
         List<User> users=searchDAO.getUsers(keyword);
         List<User> friends= friendDAO.getFriends(currentUser);
-
+        List<FriendRequest> requestList= friendRequestDAO.requestList(currentUser);
+        List<FriendRequest> responseStack= friendRequestDAO.responseStack(currentUser);
 
         int index=0;
         for(int i=0;i <users.size();i++){
@@ -44,6 +49,9 @@ public class SearchSV {
         }
 
         result.put("friends", friends);
+        result.put("responseStack", responseStack);
+        result.put("requestList", requestList);
+//        result.put("confirms", confirms);
         if(type.equalsIgnoreCase("post")){
             result.put("posts",posts);
             return result;
@@ -59,12 +67,4 @@ public class SearchSV {
         }
     }
 
-    public boolean checkAddFriend(int currentUser, String friendId) {
-        int friend=Integer.parseInt(friendId);
-        return friendDAO.addFriend(currentUser, friend); // hoặc false nếu có lỗi
-    }
-    public boolean checkRemoveFriend(int currentUser,String friendId) {
-        int friend=Integer.parseInt(friendId);
-        return friendDAO.removeFriend(currentUser, friend); // hoặc false nếu có lỗi
-    }
 }

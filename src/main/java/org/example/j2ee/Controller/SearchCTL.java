@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
+import org.example.j2ee.Service.FriendSV;
 import org.example.j2ee.Service.SearchSV;
 
 import java.io.IOException;
@@ -18,10 +19,12 @@ import java.util.stream.Collectors;
 @WebServlet("/search/*")
 public class SearchCTL extends HttpServlet {
     private SearchSV searchSV;
+    private FriendSV friendSV;
 
     @Override
     public void init() throws ServletException {
         searchSV= new SearchSV();
+        friendSV= new FriendSV();
     }
 
     @SneakyThrows
@@ -39,6 +42,7 @@ public class SearchCTL extends HttpServlet {
         request.setAttribute("users", result.get("users"));
         request.setAttribute("posts", result.get("posts"));
         request.setAttribute("friends", result.get("friends"));
+//        request.setAttribute("confirms", result.get("confirms"));
         request.getRequestDispatcher("/Template/Searcher/search.jsp").forward(request, response);
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -66,8 +70,8 @@ public class SearchCTL extends HttpServlet {
         JsonNode jsonNode = objectMapper.readTree(requestBody);
         String friendId = jsonNode.get("friendId").asText();
         int currentUser= 1; //lấy dữ liệu từ coookie
-        boolean success = searchSV.checkAddFriend(currentUser, friendId);
-
+        boolean success = friendSV.checkAddFriend(currentUser, friendId);
+        System.out.println(success);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write("{\"success\":" + success + "}");
@@ -78,7 +82,7 @@ public class SearchCTL extends HttpServlet {
         JsonNode jsonNode = objectMapper.readTree(requestBody);
         String friendId = jsonNode.get("friendId").asText();
         int currentUser= 1;//lấy dữ liệu từ cookie
-        boolean success = searchSV.checkRemoveFriend(currentUser,friendId);
+        boolean success = friendSV.checkRemoveFriend(currentUser,friendId);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
