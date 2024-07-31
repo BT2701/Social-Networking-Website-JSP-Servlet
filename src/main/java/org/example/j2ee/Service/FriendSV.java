@@ -22,6 +22,18 @@ public class FriendSV {
         friendRequest.setTimeline(timestamp);
         return friendRequestDAO.sendFriendRequest(friendRequest); // hoặc false nếu có lỗi
     }
+    public boolean cancel(int currentUser, String friendId) {
+        int friend=Integer.parseInt(friendId);
+        return friendRequestDAO.cancel(currentUser, friend); // hoặc false nếu có lỗi
+    }
+    public boolean refuse(int currentUser, String friendId) {
+        int friend=Integer.parseInt(friendId);
+        return friendRequestDAO.refuseFriendRequest(currentUser, friend); // hoặc false nếu có lỗi
+    }
+    public boolean comfirm(int currentUser, String friendId) {
+        int friend=Integer.parseInt(friendId);
+        return friendRequestDAO.acceptFriendRequest(currentUser, friend); // hoặc false nếu có lỗi
+    }
     public boolean checkRemoveFriend(int currentUser,String friendId) {
         int friend=Integer.parseInt(friendId);
         return friendDAO.removeFriend(currentUser, friend); // hoặc false nếu có lỗi

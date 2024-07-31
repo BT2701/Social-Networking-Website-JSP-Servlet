@@ -57,6 +57,15 @@ public class SearchCTL extends HttpServlet {
                 case "/removeFriend":
                     removeFriend(request,response);
                     break;
+                case "/cancel":
+                    cancel(request,response);
+                    break;
+                case "/confirm":
+                    confirm(request,response);
+                    break;
+                case "/refuse":
+                    refuse(request,response);
+                    break;
                 default:
                     response.sendError(HttpServletResponse.SC_NOT_FOUND, "Unknown request path: " + path);
                     break;
@@ -73,6 +82,42 @@ public class SearchCTL extends HttpServlet {
         String friendId = jsonNode.get("friendId").asText();
         int currentUser= 1; //lấy dữ liệu từ coookie
         boolean success = friendSV.checkAddFriend(currentUser, friendId);
+        System.out.println(success);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write("{\"success\":" + success + "}");
+    }
+    public void cancel(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String requestBody = request.getReader().lines().collect(Collectors.joining());
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = objectMapper.readTree(requestBody);
+        String friendId = jsonNode.get("friendId").asText();
+        int currentUser= 1; //lấy dữ liệu từ coookie
+        boolean success = friendSV.cancel(currentUser, friendId);
+        System.out.println(success);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write("{\"success\":" + success + "}");
+    }
+    public void refuse(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String requestBody = request.getReader().lines().collect(Collectors.joining());
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = objectMapper.readTree(requestBody);
+        String friendId = jsonNode.get("friendId").asText();
+        int currentUser= 1; //lấy dữ liệu từ coookie
+        boolean success = friendSV.refuse(currentUser, friendId);
+        System.out.println(success);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write("{\"success\":" + success + "}");
+    }
+    public void confirm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String requestBody = request.getReader().lines().collect(Collectors.joining());
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = objectMapper.readTree(requestBody);
+        String friendId = jsonNode.get("friendId").asText();
+        int currentUser= 1; //lấy dữ liệu từ coookie
+        boolean success = friendSV.comfirm(currentUser, friendId);
         System.out.println(success);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

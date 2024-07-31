@@ -501,4 +501,35 @@ box-shadow: 0px 0px 1px 0px #000000;
     text-overflow: ellipsis; /* Display ellipsis (...) */
 }
   
-  
+
+
+
+/*search bar*/
+.search-input{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    position:absolute;
+    top:25%;
+    left:8%;
+}
+.fa-magnifying-glass{
+    color: white;
+}
+/*homepage icon*/
+.homepage-icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#homepage-icon{
+    width: 60px;
+    height: auto;
+    text-decoration: none;
+    cursor: pointer;
+}
+#homepage-icon>i{
+    color:white;
+    font-size:40px;
+}
