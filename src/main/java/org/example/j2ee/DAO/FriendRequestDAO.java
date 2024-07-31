@@ -48,34 +48,79 @@ public class FriendRequestDAO {
             em.close();
         }
     }
-    public boolean refuseFriendRequest(FriendRequest friendRequest) {
+    public boolean refuseFriendRequest(int currentUser, int sender) {
+        EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
+        EntityTransaction transaction=em.getTransaction();
         try {
-            entityManager.getTransaction().begin();
-            entityManager.remove(friendRequest);
-            entityManager.getTransaction().commit();
+            transaction.begin();
+            Query query= em.createQuery("delete from FriendRequest rq where rq.sender = :sender and rq.receiver = :currentUser");
+            query.setParameter("sender", sender);
+            query.setParameter("currentUser", currentUser);
+            query.executeUpdate();
+            transaction.commit();
             return true;
         }
         catch(Exception e){
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
             return false;
+        }
+        finally {
+            em.close();
         }
     }
-    public boolean acceptFriendRequest(FriendRequest friendRequest) {
+    public boolean cancel(int currentUser, int receiver) {
+        EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
+        EntityTransaction transaction=em.getTransaction();
         try {
-            entityManager.getTransaction().begin();
-            entityManager.remove(friendRequest);
-            Friend friend = new Friend();
-            friend.setUser1(friendRequest.getSender());
-            friend.setUser2(friendRequest.getReceiver());
-            friend.setTimeline(new Timestamp(System.currentTimeMillis()));
-            friend.setIsfriend(1);
-            entityManager.persist(friend);
-            entityManager.getTransaction().commit();
+            transaction.begin();
+            Query query= em.createQuery("delete from FriendRequest rq where rq.sender = :currentUser and rq.receiver = :receiver");
+            query.setParameter("receiver", receiver);
+            query.setParameter("currentUser", currentUser);
+            query.executeUpdate();
+            transaction.commit();
             return true;
         }
         catch(Exception e){
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
             return false;
+        }
+        finally {
+            em.close();
+        }
+    }
+    public boolean acceptFriendRequest(int currentUser, int sender) {
+        EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
+        EntityTransaction transaction=em.getTransaction();
+        try {
+            transaction.begin();
+            Query query= em.createQuery("delete from FriendRequest rq where rq.sender = :sender and rq.receiver = :currentUser");
+            query.setParameter("sender", sender);
+            query.setParameter("currentUser", currentUser);
+            query.executeUpdate();
+            Friend friend = new Friend();
+            friend.setUser1(sender);
+            friend.setUser2(currentUser);
+            friend.setTimeline(new Timestamp(System.currentTimeMillis()));
+            friend.setIsfriend(1);
+            em.persist(friend);
+            transaction.commit();
+            return true;
+        }
+        catch(Exception e){
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            return false;
+        }
+        finally {
+            em.close();
         }
     }
 }

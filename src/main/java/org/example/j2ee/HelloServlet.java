@@ -7,13 +7,13 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import lombok.SneakyThrows;
 
-@WebServlet(name = "helloServlet", value = "/helloServlet")
+@WebServlet(name = "homepage", value = "/homepage")
 public class HelloServlet extends HttpServlet {
     private String message;
 
     @SneakyThrows
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        request.getRequestDispatcher("Template/Home/home.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
