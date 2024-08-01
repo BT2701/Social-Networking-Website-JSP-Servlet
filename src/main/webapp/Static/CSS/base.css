@@ -1,0 +1,89 @@
+/* OVERLAY  */
+.overlay{
+    position: absolute; 
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.4); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+  }
+  
+  
+
+
+  /* SET FOR ICON  */
+  .icon-S{
+      font-size: 16px;
+      cursor: pointer;
+  }
+  
+  .icon-M{
+      font-size: 20px;
+      cursor: pointer;
+  }
+  
+  .icon-L{
+      font-size: 24px;
+      cursor: pointer;
+  }
+
+
+  .icon-affect{
+    height: 36px;
+    width: 36px;
+    border-radius: 50%;
+    line-height: 36px !important;
+    text-align: center;
+    background-color: #777;
+  }
+  /* TEXT WILL BE "..." IF LENGTH OF TEXT IS SO LONG */
+  .truncate-1line {
+    /* width: 300px; Set the desired width */
+    display: -webkit-box; /* Display as Webkit box */
+    -webkit-box-orient: vertical; /* Vertical box orientation */
+    -webkit-line-clamp: 1; /* Show a maximum of 2 lines */
+    overflow: hidden; /* Hide the overflowed text */
+    text-overflow: ellipsis; /* Display ellipsis (...) */
+}
+
+.truncate-2line{
+    display: -webkit-box; /* Display as Webkit box */
+    -webkit-box-orient: vertical; /* Vertical box orientation */
+    -webkit-line-clamp: 2; /* Show a maximum of 2 lines */
+    overflow: hidden; /* Hide the overflowed text */
+    text-overflow: ellipsis; /* Display ellipsis (...) */
+}
+  
+  
+
+
+/* CUSTOM SCROLL BAR FOR THE SCROLL BAR IS THIN */
+/* For WebKit browsers (Chrome, Safari) */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    /* Adjust the width as desired */
+    height: 5px;
+    /* Adjust the height as desired */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #888;
+    /* Color of the scrollbar thumb */
+    border-radius: 50px;
+    /* Rounded corners */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    /* Color of the scrollbar track */
+}
+
+/* For Firefox */
+.custom-scrollbar {
+    scrollbar-width: thin;
+    /* Make scrollbar thinner */
+    scrollbar-color: #888 #f1f1f1;
+    /* Thumb color and track color */
+}
