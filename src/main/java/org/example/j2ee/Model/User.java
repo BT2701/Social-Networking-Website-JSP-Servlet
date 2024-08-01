@@ -99,4 +99,7 @@ public class User {
 
     @Transient
     private Long friendsCount;
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<Story> stories;
 }
