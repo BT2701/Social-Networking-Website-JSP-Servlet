@@ -9,10 +9,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" href="../../Static/CSS/home.css">
+    <link rel="stylesheet" href="../../Static/CSS/base.css">
 </head>
-<style>
-
-</style>
 
 <body>
     <header class="text-white p-3 d-flex justify-content-between align-items-center">
@@ -22,91 +20,13 @@
                 <a href="search"><i class="fa-solid fa-magnifying-glass mx-2 icon-M icon-affect"></i></a>
             </div>
         <div class="d-flex">
-            <div class="messenger" onclick="displayMessenger()">
-                <i class="fas fa-envelope mx-2 icon-M icon-affect"></i>
+            <div class="messenger">
+                <i class="fas fa-envelope mx-2 icon-M icon-affect" id="icon-messenger"></i>
                 <div class="messenger-box">
                     <div class="messenger-box-header">
                         Chats
                     </div>
                     <div class="messenger-box-body custom-scrollbar">
-                        <div class="inbox">
-                            <img src="../../Static/Images/pizzabanner.png" alt="Contact 1"
-                                class="rounded-circle border border-1 me-3" width="40" height="40">
-                            <div class="inbox-relative">
-                                <div class="friend-name">
-                                    <span>Nguyen Nhat Truong</span>
-                                </div>
-                                <div class="newest-chat">
-                                    <span class="truncate-1line">Xi di choi bida khong, mia nay chan vl</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="inbox">
-                            <img src="../../Static/Images/pizzabanner.png" alt="Contact 1"
-                                class="rounded-circle border border-1 me-3" width="40" height="40">
-                            <div class="inbox-relative">
-                                <div class="friend-name">
-                                    <span>Nguyen Nhat Truong</span>
-                                </div>
-                                <div class="newest-chat">
-                                    <span class="truncate-1line">Xi di choi bida khong, mia nay chan vl</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="inbox">
-                            <img src="../../Static/Images/pizzabanner.png" alt="Contact 1"
-                                class="rounded-circle border border-1 me-3" width="40" height="40">
-                            <div class="inbox-relative">
-                                <div class="friend-name">
-                                    <span>Nguyen Nhat Truong</span>
-                                </div>
-                                <div class="newest-chat">
-                                    <span class="truncate-1line">Xi di choi bida khong, mia nay chan vl</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="inbox">
-                            <img src="../../Static/Images/pizzabanner.png" alt="Contact 1"
-                                class="rounded-circle border border-1 me-3" width="40" height="40">
-                            <div class="inbox-relative">
-                                <div class="friend-name">
-                                    <span>Nguyen Nhat Truong</span>
-                                </div>
-                                <div class="newest-chat">
-                                    <span class="truncate-1line">Xi di choi bida khong, mia nay chan vl</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="inbox">
-                            <img src="../../Static/Images/pizzabanner.png" alt="Contact 1"
-                                class="rounded-circle border border-1 me-3" width="40" height="40">
-                            <div class="inbox-relative">
-                                <div class="friend-name">
-                                    <span>Nguyen Nhat Truong</span>
-                                </div>
-                                <div class="newest-chat">
-                                    <span class="truncate-1line">Xi di choi bida khong, mia nay chan vl</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="inbox">
-                            <img src="../../Static/Images/pizzabanner.png" alt="Contact 1"
-                                class="rounded-circle border border-1 me-3" width="40" height="40">
-                            <div class="inbox-relative">
-                                <div class="friend-name">
-                                    <span>Nguyen Nhat Truong</span>
-                                </div>
-                                <div class="newest-chat">
-                                    <span class="truncate-1line">Xi di choi bida khong, mia nay chan vl</span>
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="inbox">
                             <img src="../../Static/Images/pizzabanner.png" alt="Contact 1"
                                 class="rounded-circle border border-1 me-3" width="40" height="40">
@@ -126,8 +46,8 @@
                 </div>
             </div>
 
-            <div class="notification" onclick="displayNotification()">
-                <i class="fas fa-bell mx-2 icon-M icon-affect"></i>
+            <div class="notification">
+                <i class="fas fa-bell mx-2 icon-M icon-affect" id="icon-notification"></i>
                 <div class="notification-box">
                     <div class="notification-box-header">Notification</div>
                     <div class="notification-box-body custom-scrollbar">
@@ -139,55 +59,6 @@
                                 201
                             </span>
                         </div>
-                        <div class="notification-item d-flex">
-                            <img src="../../Static/Images/pizzabanner.png" alt="Contact 1"
-                                class="rounded-circle border border-1 me-3" width="40" height="40">
-                            <span class="notification-content truncate-2line">Nguyen Nhat Truong gui loi moi ket
-                                ban</span>
-                        </div>
-                        <div class="notification-item d-flex">
-                            <img src="../../Static/Images/pizzabanner.png" alt="Contact 1"
-                                class="rounded-circle border border-1 me-3" width="40" height="40">
-                            <span class="notification-content truncate-2line">Nguyen Nhat Truong gui loi moi ket
-                                ban</span>
-                        </div>
-                        <div class="notification-item d-flex">
-                            <img src="../../Static/Images/pizzabanner.png" alt="Contact 1"
-                                class="rounded-circle border border-1 me-3" width="40" height="40">
-                            <span class="notification-content truncate-2line">Nguyen Nhat Truong moi ban tham gia danh
-                                nhau
-                                tai
-                                hoi nghi thuong dinh thuong nien
-                            </span>
-                        </div>
-                        <div class="notification-item d-flex">
-                            <img src="../../Static/Images/pizzabanner.png" alt="Contact 1"
-                                class="rounded-circle border border-1 me-3" width="40" height="40">
-                            <span class="notification-content truncate-2line">Nguyen Nhat Truong gui loi moi ket
-                                ban</span>
-                        </div>
-                        <div class="notification-item d-flex">
-                            <img src="../../Static/Images/pizzabanner.png" alt="Contact 1"
-                                class="rounded-circle border border-1 me-3" width="40" height="40">
-                            <span class="notification-content truncate-2line">Nguyen Nhat Truong gui loi moi ket
-                                ban</span>
-                        </div>
-                        <div class="notification-item d-flex">
-                            <img src="../../Static/Images/pizzabanner.png" alt="Contact 1"
-                                class="rounded-circle border border-1 me-3" width="40" height="40">
-                            <span class="notification-content truncate-2line">Nguyen Nhat Truong gui loi moi ket
-                                ban</span>
-                        </div>
-                        <div class="notification-item d-flex">
-                            <img src="../../Static/Images/pizzabanner.png" alt="Contact 1"
-                                class="rounded-circle border border-1 me-3" width="40" height="40">
-                            <span class="notification-content truncate-2line">Nguyen Nhat Truong share mot video</span>
-                        </div>
-                        <div class="notification-item d-flex">
-                            <img src="../../Static/Images/pizzabanner.png" alt="Contact 1"
-                                class="rounded-circle border border-1 me-3" width="40" height="40">
-                            <span class="notification-content truncate-2line">Nguyen Nhat Truong dang mot anh moi</span>
-                        </div>
                         <button>See privious notifications</button>
                     </div>
                     <!-- <div class="notification-box-footer">
@@ -198,7 +69,7 @@
             </div>
 
             <div class="user-operation" onclick="displayUserOperator()">
-                <i class="fas fa-user mx-2 icon-M icon-affect"></i>
+                <i class="fas fa-user mx-2 icon-M icon-affect" id="icon-user-operation"></i>
                 <ul class="user-operation-box">
                     <li class="user-operation-box-item">
                         <i class="fa-regular fa-user"></i>
@@ -269,8 +140,6 @@
                             </div>
                         </div>
 
-
-
                         <div class="post">
                             <div class="post-header">
                                 <div class="avt-user">
@@ -309,8 +178,9 @@
                 <section class="contacts custom-scrollbar mb-4">
                     <h4>Contacts</h4>
                     <ul class="list-group">
-                        <li class="list-group-item d-flex align-items-center border-0">
-                            <img src="../../Static/Images/pizzabanner.png" alt="Contact 1"
+                        <li class="list-group-item d-flex align-items-center border-0" id="user1"
+                            onclick="appearChatBox()">
+                            <img src=" ../../Static/Images/pizzabanner.png" alt="Contact 1"
                                 class="rounded-circle border border-1 me-3" width="40" height="40">
                             <span class="rounded-circle border border-1 active"></span>
                             <span>Nguyen Nhat Truong</span>
@@ -346,7 +216,7 @@
                 </section>
             </div>
 
-            <!-- Modal -->
+            <!-- MODAL FORM CREATE POST -->
             <div class="modal fade" id="formCreatePost" tabindex="-1" aria-labelledby="formCreatePostLabel"
                 aria-hidden="true">
                 <div class="modal-dialog">
@@ -393,10 +263,6 @@
                             <textarea class="status w-100 border-0" name="" id="" placeholder="What's on your mind?"
                                 rows="3"></textarea>
                             <div class="contain-img-video">
-                                <div class="img-video-item position-relative">
-                                    <img src="../../Static/Images/pizzabanner.png" alt="">
-                                    <i class="fa-solid fa-x icon-M position-absolute"></i>
-                                </div>
                             </div>
                             <div class="addition d-flex border borde-1 p-2 rounded">
                                 <span class="me-3">Add photo/video</span>
@@ -411,59 +277,29 @@
                     </div>
                 </div>
             </div>
+
+
+
+            <div class="chat-box one-on-one" id="chatbox">
+                <div class=" chat-header">
+                    <img src="../../Static/Images/pizzashop.png" alt="User Profile" class="profile-pic">
+                    <span class="user-name">John Doe</span>
+                    <i class="fas fa-times close-chat icon" title="Close"></i> <!-- Close icon -->
+                </div>
+                <div class="chat-messages">
+                    <!-- Messages will be dynamically inserted here -->
+                </div>
+                <div class="chat-input">
+                    <input type="text" placeholder="Type a message...">
+                    <button>Send</button>
+                </div>
+            </div>
+
         </div>
 
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../../Static/JS/home.js"></script>
-    <script>
-        document.getElementById('chooseFileIcon').onclick = function () {
-            document.getElementById('fileInput').click();
-        };
-
-        document.getElementById('fileInput').onchange = function (event) {
-            const files = event.target.files;
-            const containImgVideo = document.querySelector('.contain-img-video');
-            // containImgVideo.innerHTML = ''; // Clear previous images
-
-            Array.from(files).forEach(file => {
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function (e) {
-                        const img = document.createElement('img');
-                        img.src = e.target.result;
-                        containImgVideo.appendChild(img);
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-        };
-
-
-        function selectOption(option) {
-            document.getElementById('selectedOption').innerText = 'Selected Option: ' + option;
-            document.getElementById('dropdownMenuButton').innerText = option;
-        }
-
-
-
-        //display notification
-        function displayNotification() {
-            let notificatioBox = document.querySelector(".notification-box");
-            notificatioBox.classList.toggle("d-block");
-        }
-
-        function displayUserOperator() {
-            let userOperator = document.querySelector(".user-operation-box");
-            userOperator.classList.toggle("d-block");
-        }
-
-        function displayMessenger() {
-            let userOperator = document.querySelector(".messenger-box");
-            userOperator.classList.toggle("d-block");
-        }
-    </script>
-
 </body>
 
 </html>
