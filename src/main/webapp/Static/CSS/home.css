@@ -1,3 +1,5 @@
+
+/* //SET SOME VARIABLE FOR HOME PAGE */
 :root{
     --header-high:70px;
 }
@@ -9,7 +11,6 @@ body {
     padding: 0;
 }
 
-
 header{
     background-color:rgba(13,110,253,1);
     height: var(--header-high);
@@ -20,38 +21,28 @@ header{
     z-index: 3;
 }
 
-
-/* header i{
-    height: 36px;
-    width: 36px;
-    border: 1px solid black;
-    border-radius: 50%;
-    line-height: 36px !important;
-    text-align: center;
-    background-color: #777;
-} */
-
-
-header i:hover{
-    color: black;
-    background-color: #fff;
-}
-
-
 main{
     padding-top: var(--header-high);
 }
 
-.feed .post {
+
+/* header i:hover{
+    color: black;
+    background-color: #fff;
+} */
+
+/* .feed .post {
     border-bottom: 1px solid #ddd;
     padding: 10px 0;
 }
 
 .feed .post:last-child {
     border-bottom: none;
-}
+} */
 
 
+
+/* STYLE FOR CONTACT AND GROUP CHAT ITIEM  */
 .contacts {
     overflow-y: auto;
     height: 100vh;
@@ -89,49 +80,7 @@ main{
 }
 
 
-/* user active  */
-.active{
-    background-color: rgb(4, 189, 63);
-    width: 10px;
-    height: 10px;
-    position: absolute;
-    left: 46px;
-    bottom: 10px;
-}
-
-/* custom scrollbar  */
-/* For WebKit browsers (Chrome, Safari) */
-.custom-scrollbar::-webkit-scrollbar {
-    width: 8px;
-    /* Adjust the width as desired */
-    height: 5px;
-    /* Adjust the height as desired */
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #888;
-    /* Color of the scrollbar thumb */
-    border-radius: 50px;
-    /* Rounded corners */
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    /* Color of the scrollbar track */
-}
-
-/* For Firefox */
-.custom-scrollbar {
-    scrollbar-width: thin;
-    /* Make scrollbar thinner */
-    scrollbar-color: #888 #f1f1f1;
-    /* Thumb color and track color */
-}
-
-
-
-
-/* style for form create post  */
+/*STYLE FOR FORM CREATE POST  */
 #fileInput {
     display: none;
 }
@@ -192,13 +141,12 @@ main{
 box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.41);
 }
 
-
 .status{
     height: 50px;
 }
 
 
-/* css poster  */
+/*STYLE FOR POST*/
 .post{
     -webkit-box-shadow: 0px 0px 7px 1px rgba(0,0,0,0.32); 
 box-shadow: 0px 0px 7px 1px rgba(0,0,0,0.32);
@@ -207,9 +155,6 @@ margin-bottom: 60px;
 }
 
 
-
-
-/* //post header  */
 .post-header{
     display: flex;
     padding:0 10px 0 10px;
@@ -225,19 +170,15 @@ margin-bottom: 60px;
     padding: 0 5px 0 5px;
     margin-bottom: 10px;
 }
-
-
 .posting-time{
     margin: -3px 0 5px 0;
 }
 
 
 
-/* ///post body   */
 .post-body{
     width: 100%;
     height: 300px;
-    /* border: 1px solid black; */
     position: relative;
     text-align: center;
 }
@@ -259,12 +200,11 @@ margin-bottom: 60px;
     width: 100%;
 }
 
-/* ///post footer  */
+
 .post-footer{
     height: 50px;
     padding-left: 10px;
 }
-
 
 .post-footer i{
     margin:10px 10px 0 0;
@@ -280,7 +220,7 @@ margin-bottom: 60px;
 
 
 
-/* style for navigation */
+/* STYLE FOR NAVIGATION  */
 .navigation{
     border: 1px solid black;
     margin-right: 10px;
@@ -288,7 +228,7 @@ margin-bottom: 60px;
 
 
 
-/* //style for notification  */
+/*STYLE FOR NOTIFICATION BOX AND NOTIFICATION ITEM */
 .notification{
     position: relative;
 
@@ -303,19 +243,6 @@ margin-bottom: 60px;
     border-radius: 4px;
     display: none;
 }
-
-
-
-/* .notification-box::before{
-    content: "";
-    position: absolute;
-    top: -14px;
-    right: 8px;
-    border-left: 12px solid transparent;
-	border-right: 12px solid transparent;
-	border-bottom: 14px solid #555;
-} */
-
 
 
 .notification-box-header{
@@ -356,6 +283,7 @@ box-shadow: 0px 0px 1px 0px #000000;
 
 
 
+/* STYLE FOR USER OPERATION BOX AND OPERATION ITEM  */
 .user-operation{
     position: relative;
 }
@@ -395,6 +323,7 @@ box-shadow: 0px 0px 1px 0px #000000;
 
 
 
+/* STYLE FOR MESSENGER BOX AND MESSENGER ITEM (USER) */
 
 .messenger{
     position: relative;
@@ -439,66 +368,110 @@ display: none;
 box-shadow: 0px 0px 1px 0px #000000;
 }
 
-/* ///common part  */
-.overlay{
-    position: absolute; 
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.4); /* Black background with opacity */
-    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
-    cursor: pointer; /* Add a pointer on hover */
-  }
-  
-  
-  .icon-S{
-      font-size: 16px;
-      cursor: pointer;
-  }
-  
-  .icon-M{
-      font-size: 20px;
-      cursor: pointer;
-  }
-  
-  .icon-L{
-      font-size: 24px;
-      cursor: pointer;
-  }
 
 
-  .icon-affect{
-    height: 36px;
-    width: 36px;
-    border-radius: 50%;
-    line-height: 36px !important;
-    text-align: center;
-    background-color: #777;
-  }
 
-  .heart-red{
+
+/* WHEN USER HEARTED FOR POST  */
+.heart-red{
     color: red;
   }
 
 
-
-
-  .truncate-1line {
-    /* width: 300px; Set the desired width */
-    display: -webkit-box; /* Display as Webkit box */
-    -webkit-box-orient: vertical; /* Vertical box orientation */
-    -webkit-line-clamp: 1; /* Show a maximum of 2 lines */
-    overflow: hidden; /* Hide the overflowed text */
-    text-overflow: ellipsis; /* Display ellipsis (...) */
+/*SET THIS FOR ITEM USER WHEN ONE USER IS ACTIVE */
+.active{
+    background-color: rgb(4, 189, 63);
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    left: 46px;
+    bottom: 10px;
 }
 
-.truncate-2line{
-    display: -webkit-box; /* Display as Webkit box */
-    -webkit-box-orient: vertical; /* Vertical box orientation */
-    -webkit-line-clamp: 2; /* Show a maximum of 2 lines */
-    overflow: hidden; /* Hide the overflowed text */
-    text-overflow: ellipsis; /* Display ellipsis (...) */
-}
+
+
+
+
+
+/*STYLE FOR CHAT BOX */
+.chat-box {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 300px;
+    height: 400px;
+    flex-direction: column;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 0;
+    position: fixed;
+    right: 74px;
+    bottom: 0;
+    display:none;
+  }
   
+  .chat-header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    background-color:rgba(13,110,253,1);
+    border-radius: 5px 5px 0 0;
+    color: #fff;
+  }
+  
+  .profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .user-name{
+    font-weight: bold;
+  }
+  
+  
+  .chat-messages {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+  }
+  
+  .chat-input {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    background-color: #f5f5f5;
+  }
+  
+  .chat-input input {
+    flex: 1;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 5px;
+  }
+  
+  .chat-input button {
+    margin-left: 10px;
+    padding: 5px 10px;
+  }
+  
+  .close-chat {
+    font-size: 20px;
+    position: absolute;
+    right: 30px;
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+  }
+
+
+  .close-chat:hover{
+    background-color: #2f7bff;
+    border-radius: 50%;
+  }
+  
+
   
