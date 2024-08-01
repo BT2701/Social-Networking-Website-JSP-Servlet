@@ -1,14 +1,16 @@
 package org.example.j2ee.DAO;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 import org.example.j2ee.Model.Friend;
 import org.example.j2ee.Model.User;
 import org.example.j2ee.Util.JPAUtil;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class FriendDAO {
+    @PersistenceContext
     private EntityManager entityManager;
     public FriendDAO() {
         entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
@@ -36,18 +38,31 @@ public class FriendDAO {
         query.setParameter("userId", currentUser);
         return query.getResultList();
     }
-    public boolean addFriend(int user1, int user2){
-        String queryStr = "INSERT INTO Friend(user1, user2, isfriend) VALUES (:user1, :user2, 0)";
-        TypedQuery<Friend> query = entityManager.createQuery(queryStr, Friend.class);
-        query.setParameter("user1", user1);
-        query.setParameter("user2", user2);
-        return query.executeUpdate() > 0;
-    }
+
+    @Transactional
     public boolean removeFriend(int user1, int user2){
-        String queryStr = "DELETE FROM Friend WHERE (user1 = :user1 AND user2 = :user2) or (user1 = :user2 AND user2 = :user1)";
-        TypedQuery<Friend> query = entityManager.createQuery(queryStr, Friend.class);
-        query.setParameter("user1", user1);
-        query.setParameter("user2", user2);
-        return query.executeUpdate() > 0;
+        EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
+        EntityTransaction transaction=em.getTransaction();
+        try {
+            transaction.begin();
+            String queryStr = "DELETE FROM Friend WHERE (user1 = :user1 AND user2 = :user2) or (user1 = :user2 AND user2 = :user1)";
+            Query query = em.createQuery(queryStr);
+            query.setParameter("user1", user1);
+            query.setParameter("user2", user2);
+            query.executeUpdate();
+            transaction.commit();
+            return true;
+        }
+        catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            return false;
+        }
+        finally {
+            em.close();
+        }
+
     }
 }

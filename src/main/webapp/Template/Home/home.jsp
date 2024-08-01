@@ -14,9 +14,11 @@
 
 <body>
     <header class="text-white p-3 d-flex justify-content-between align-items-center">
-        <div>
-            <h1 class="h3 m-0">MySocial</h1>
-        </div>
+        <div class="homepage-icon"><a href="homepage" id="homepage-icon"><i class="fa-brands fa-facebook" ></i></a></div>
+            <div class="search-input">
+                <input type="text" placeholder="search..." class="form-control">
+                <a href="search"><i class="fa-solid fa-magnifying-glass mx-2 icon-M icon-affect"></i></a>
+            </div>
         <div class="d-flex">
             <div class="messenger">
                 <i class="fas fa-envelope mx-2 icon-M icon-affect" id="icon-messenger"></i>
@@ -65,16 +67,17 @@
                 </div>
 
             </div>
+
             <div class="user-operation" onclick="displayUserOperator()">
                 <i class="fas fa-user mx-2 icon-M icon-affect" id="icon-user-operation"></i>
                 <ul class="user-operation-box">
                     <li class="user-operation-box-item">
                         <i class="fa-regular fa-user"></i>
-                        <span>Profile</span>
+                        <a href="profile?userId=1"><span>Profile</span></a>
                     </li>
                     <li class="user-operation-box-item">
                         <i class="fa-solid fa-right-from-bracket"></i>
-                        <span>Logout</span>
+                        <a href="login"><span>Logout</span></a>
                     </li>
                     <li class="user-operation-box-item">
                         <i class="fa-solid fa-gear"></i>
