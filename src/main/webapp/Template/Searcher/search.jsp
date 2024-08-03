@@ -23,6 +23,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+<jsp:include page="../Header/header.jsp" />
 <div class="search-container" id="search-container">
     <div class="search-left">
         <div class="search-left-title">
@@ -114,6 +115,14 @@
                     <div class="search-content-post-header-right">
                         <c:if test="${item.owner}">
                         <button class="btn"><i class="fa-solid fa-ellipsis"></i></button>
+                            <div class="search-handle-post" style="display: block">
+                                <button class="search-handle-edit btn">
+                                    <i class="fa-solid fa-pen-to-square"></i> Edit
+                                </button>
+                                <button class="search-handle-delete btn">
+                                    <i class="fa-solid fa-trash"></i> Delete
+                                </button>
+                            </div>
                         </c:if>
                     </div>
                 </div>
