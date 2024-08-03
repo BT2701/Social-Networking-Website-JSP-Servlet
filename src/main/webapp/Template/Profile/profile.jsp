@@ -18,14 +18,14 @@
                     <img class="profile__avatar" alt="avatar" src="/uploads/${user.avt}">
                     <div id="editAvatar"><i class="fa-solid fa-pen"></i></div>
                 </div>
-                <div class="info">
+                <div class="info" data-user-id="${user.id}">
                     <h2 class="info--name">${user.name}</h2>
-                    <p>${friendsCount} bạn bè</p>
+                    <p>${friendsCount} friends</p>
                     <p class="info--desc">${user.desc}</p>
                 </div>
             </div>
             <div class="header__option">
-                <button id="editProfileBtn"><i class="fa-solid fa-pen"></i> Chỉnh sửa thông tin cá nhân</button>
+                <button id="editProfileBtn"><i class="fa-solid fa-pen"></i> Edit profile</button>
             </div>
         </header>
         <p class="separator"></p>
@@ -33,11 +33,11 @@
             <aside class="content__leftside">
                 <div class="info__container">
                     <div>
-                        <span class="sp-title">Ngày sinh: </span>
+                        <span class="sp-title">Date of birth: </span>
                         <span class="info--birth">${user.birth}</span>
                     </div>
                     <div>
-                        <span class="sp-title">Số điện thoại: </span>
+                        <span class="sp-title">Phone number: </span>
                         <span class="info--phone">${user.phone}</span>
                     </div>
                     <div>
@@ -45,34 +45,34 @@
                         <span class="info--email">${user.email}</span>
                     </div>
                     <div>
-                        <span class="sp-title">Giới tính: </span>
+                        <span class="sp-title">Gender: </span>
                         <span class="info--gender">${user.gender}</span>
                     </div>
                     <div>
-                        <span class="sp-title">Học vấn: </span>
+                        <span class="sp-title">Education: </span>
                         <span class="info--education">${user.education}</span>
                     </div>
                     <div>
-                        <span class="sp-title">Mối quan hệ: </span>
+                        <span class="sp-title">Relationship: </span>
                         <span class="info--relationship">${user.relationship}</span>
                     </div>
                     <div>
-                        <span class="sp-title">Địa chỉ: </span>
+                        <span class="sp-title">Address: </span>
                         <span class="info--address">${user.address}</span>
                     </div>
                     <div>
-                        <span class="sp-title">Mạng xã hội: </span>
+                        <span class="sp-title">Social network: </span>
                         <a class="info--social" href="${user.social}" target="_blank">${user.name}</a>
                     </div>
                 </div>
                 <div class="friends__container">
                     <div class="friends__container--header">
                         <div>
-                            <h2>Bạn bè</h2>
-                            <p>${friendsCount} bạn bè</p>
+                            <h2>Friends</h2>
+                            <p>${friendsCount} Friends</p>
                         </div>
                         <div>
-                            <button id="friendsBtn">Xem tất cả bạn bè</button>
+                            <button id="friendsBtn">See all friends</button>
                         </div>
                     </div>
                     <div class="friends__container--content">
@@ -120,20 +120,20 @@
                         </c:if>
                         <div class="post__action">
                             <div class="like-button ${post.likedByUser ? '' : 'active'}">
-                                <button><i class="fa-regular fa-heart"></i> Thích (<span class="like-preview">${fn:length(post.reactions)}</span>)</button>
+                                <button><i class="fa-regular fa-heart"></i> Like (<span class="like-preview">${fn:length(post.reactions)}</span>)</button>
                             </div>
                             <div class="unlike-button ${post.likedByUser ? 'active' : ''}">
-                                <button><i class="fa-solid fa-heart"></i> Bỏ thích (<span class="unlike-preview">${fn:length(post.reactions)}</span>)</button>
+                                <button><i class="fa-solid fa-heart"></i> Unlike (<span class="unlike-preview">${fn:length(post.reactions)}</span>)</button>
                             </div>
 
                             <div>
-                                <button class="commentBtn"><i class="fa-regular fa-comment"></i> Bình luận (<span class="comment-preview">${fn:length(post.comments)}</span>)</button>
+                                <button class="commentBtn"><i class="fa-regular fa-comment"></i> Comment (<span class="comment-preview">${fn:length(post.comments)}</span>)</button>
                             </div>
                         </div>
                         <div class="post__comment display-none">
                             <div class="post__comment-input">
                                 <input placeholder="Nhập bình luận..." type="text">
-                                <button class="submit-comment-Btn">Gửi</button>
+                                <button class="submit-comment-Btn">Submit</button>
                             </div>
                             <div class="post__comment-list">
                                 <c:forEach var="comment" items="${post.comments}">
@@ -157,10 +157,10 @@
     <!-- Modal xác nhận xóa -->
     <div id="deleteModal" class="modalDeletePost">
         <div class="modal-content-DeletePost">
-            <p>Bạn có muốn xóa bài đăng này không ?</p>
+            <p>Do you want to delete this post?</p>
             <div class="deleteModal-btn-wrapper">
-                <button id="confirmDelete">Có</button>
-                <button id="cancelDelete">Hủy</button>
+                <button id="confirmDelete">Yes</button>
+                <button id="cancelDelete">Cancel</button>
             </div>
         </div>
     </div>
@@ -170,7 +170,7 @@
         <div class="friendsModal-container">
             <div class="modal-content">
                 <span class="close">&times;</span>
-                <h3>Danh sách bạn bè</h3>
+                <h3>Friends List</h3>
                 <div class="friend-list">
                     <c:forEach var="friend" items="${friends}">
                         <a href="${pageContext.request.contextPath}/profile?userId=${friend.id}" class="friend-item">
@@ -188,20 +188,20 @@
         <div class="editProfileModal2-container">
             <div class="modal-content2">
                 <span class="close2" onclick="closeModal()">&times;</span>
-                <h3>Chỉnh sửa thông tin cá nhân</h3>
+                <h3>Edit personal information</h3>
                 <form id="editProfileForm2">
                     <div class="input-wrapper">
-                        <label for="name">Tên:</label>
+                        <label for="name">Name:</label>
                         <input type="text" id="name" name="name" value="${user.name}" ><br><br>
                     </div>
 
                     <div class="input-wrapper">
-                        <label for="birth">Ngày sinh:</label>
+                        <label for="birth">Date of birth:</label>
                         <input type="date" id="birth" name="birth" value="${user.birth}" ><br><br>
                     </div>
 
                     <div class="input-wrapper">
-                        <label for="phone">Số điện thoại:</label>
+                        <label for="phone">Phone number:</label>
                         <input type="text" id="phone" name="phone" value="${user.phone}"><br><br>
                     </div>
 
@@ -211,41 +211,42 @@
                     </div>
 
                     <div class="input-wrapper">
-                        <label for="gender">Giới tính:</label>
+                        <label for="gender">Gender:</label>
                         <select id="gender" name="gender" value="${user.gender}">
-                            <option value="">Chọn giới tính</option>
-                            <option value="Nam" ${user.gender == 'Nam' ? 'selected' : ''}>Nam</option>
-                            <option value="Nữ" ${user.gender == 'Nữ' ? 'selected' : ''}>Nữ</option>
+                            <option value="">Select gender</option>
+                            <option value="male" ${user.gender == 'male' ? 'selected' : ''}>Male</option>
+                            <option value="female" ${user.gender == 'female' ? 'selected' : ''}>Female</option>
                         </select><br><br>
                     </div>
 
                     <div class="input-wrapper">
-                        <label for="desc">Mô tả:</label>
+                        <label for="desc">Description:</label>
                         <textarea id="desc" name="desc">${user.desc}</textarea><br><br>
                     </div>
 
                     <div class="input-wrapper">
-                        <label for="address">Địa chỉ:</label>
+                        <label for="address">Address:</label>
                         <input type="text" id="address" name="address" value="${user.address}"><br><br>
                     </div>
 
                     <div class="input-wrapper">
-                        <label for="social">Mạng xã hội:</label>
+                        <label for="social">Social network:</label>
                         <input type="text" id="social" name="social" value="${user.social}"><br><br>
                     </div>
 
                     <div class="input-wrapper">
-                        <label for="education">Học vấn:</label>
+                        <label for="education">Education:</label>
                         <input type="text" id="education" name="education" value="${user.education}"><br><br>
                     </div>
 
                     <div class="input-wrapper">
-                        <label for="relationship">Tình trạng quan hệ:</label>
+                        <label for="relationship">Relationship:</label>
                         <select id="relationship" name="relationship" value="${user.relationship}">
                             <option value="">Chọn tình trạng</option>
-                            <option value="Độc thân" ${user.relationship == 'Độc thân' ? 'selected' : ''}>Độc thân</option>
-                            <option value="Hẹn hò" ${user.relationship == 'Hẹn hò' ? 'selected' : ''}>Hẹn hò</option>
-                            <option value="Đã kết hôn" ${user.relationship == 'Đã kết hôn' ? 'selected' : ''}>Đã kết hôn</option>
+                            <option value="Single" ${user.relationship == 'Single' ? 'selected' : ''}>Single</option>
+                            <option value="Dating" ${user.relationship == 'Dating' ? 'selected' : ''}>Dating</option>
+                            <option value="Married" ${user.relationship == 'Married' ? 'selected' : ''}>Married</option>
+                            <option value="Complicated" ${user.relationship == 'Complicated' ? 'selected' : ''}>Complicated</option>
                         </select>
                     </div>
 
@@ -260,10 +261,10 @@
         <div class="modalEditAvatar-container">
             <div class="modal-content-EditAvatar">
                 <span class="close-EditAvatar">&times;</span>
-                <h2 class="editAvatar-title">Cập nhật ảnh đại diện</h2>
+                <h2 class="editAvatar-title">Update profile avatar</h2>
                 <form id="editAvatarForm" method="post" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label for="postImage"><strong>Hình ảnh:</strong></label>
+                        <label for="postImage"><strong>Picture:</strong></label>
                         <input type="file" id="avatarImage" name="avatarImage">
                     </div>
                     <div class="avatar__image">
@@ -283,14 +284,14 @@
         <div class="modalEditPost-container">
             <div class="modal-content-EditPost">
                 <span class="close-EditPost">&times;</span>
-                <h2 class="editPost-title">Chỉnh sửa bài viết</h2>
+                <h2 class="editPost-title">Edit post</h2>
                 <form id="editPostForm" method="post" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label for="postContent"><strong>Nội dung:</strong></label>
+                        <label for="postContent"><strong>Content:</strong></label>
                         <textarea id="postContent" name="postContent" rows="4" cols="50"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="postImage"><strong>Hình ảnh:</strong></label>
+                        <label for="postImage"><strong>Picture:</strong></label>
                         <input type="file" id="postImage" name="postImage">
                     </div>
                     <div class="post__image">
