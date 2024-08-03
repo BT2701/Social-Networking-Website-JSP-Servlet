@@ -29,11 +29,11 @@ public class Post {
     private Timestamp timeline;
 
     @JsonIgnore // để tránh vòng lặp vô hạn khi lấy dữ liệu
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
     private List<Comment> comments;
 
     @JsonIgnore // để tránh vòng lặp vô hạn khi lấy dữ liệu
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
     private List<Reaction> reactions;
 
     @Transient

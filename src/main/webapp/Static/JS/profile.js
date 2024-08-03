@@ -3,7 +3,48 @@ let postToUpdate = null;
 let postToLike = null;
 let postToUnLike = null;
 let postToComment = null;
-var userId = 1;
+let userId = -1;
+
+// console.log(getCookie('username'));
+// console.log(getCookie('password'));
+
+if(getCookie('username')) {
+    const infor = document.querySelector('.info');
+    const userIdFromInforTag = infor.getAttribute('data-user-id');
+
+    const email = document.querySelector(".info--email").innerHTML.trim();
+    const username = decodeURIComponent(getCookie('username')).trim(); // Giải mã cookie username
+    if (email === username) {
+        userId = parseInt(userIdFromInforTag);
+    }
+}
+
+const urlParams = new URLSearchParams(window.location.search);
+const profileUserId = urlParams.get('userId');
+if (userId === profileUserId) {
+    document.getElementById('editProfileBtn').style.display = 'block';
+
+    document.querySelectorAll('.post').forEach(post => {
+        post.querySelector('.btn-edit').style.display = 'unset';
+        post.querySelector('.btn-delete').style.display = 'unset';
+    })
+} else {
+    document.getElementById('editProfileBtn').style.display = 'none';
+    document.getElementById('editAvatar').style.display = 'none';
+
+    document.querySelectorAll('.post').forEach(post => {
+        post.querySelector('.btn-edit').style.display = 'none';
+        post.querySelector('.btn-delete').style.display = 'none';
+    })
+}
+
+// Hàm để lấy giá trị cookie
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
+}
 
 // edit post
 const modalEditPost = document.getElementById('editPostModal');
@@ -162,7 +203,6 @@ document.querySelectorAll(".submit-comment-Btn").forEach(cmtBtn => {
         }
     })
 })
-
 
 // like and unlike post
 document.querySelectorAll(".like-button").forEach(likeBtn => {
@@ -358,7 +398,7 @@ editProfileForm.onsubmit = function(event) {
     const relationship = document.getElementById("relationship").value;
     const education = document.getElementById("education").value;
 
-    if (phone === "" || email === "" || desc === "" || address === "" || social === "" || education === "" || !birth) {
+    if (phone === "" || email === "" || address === "" || !birth) {
         alert("Tất cả các trường không được để trống.");
         return;
     }
@@ -387,7 +427,7 @@ editProfileForm.onsubmit = function(event) {
     }
 
     // Kiểm tra mô tả tối đa 100 chữ
-    if (desc.length > 100) {
+    if (desc.length !== "" && desc.length > 100) {
         alert("Mô tả được tối đa 100 chữ.");
         return;
     }
@@ -399,18 +439,12 @@ editProfileForm.onsubmit = function(event) {
     }
 
     // Kiểm tra mạng xã hội tối đa 50 chữ
-    if (social.length > 50) {
+    if (social.length !== "" && social.length > 50) {
         alert("Mạng xã hội được tối đa 50 chữ.");
         return;
     }
 
-    // Kiểm tra chọn tình trạng mối quan hệ không được rỗng
-    if (relationship === "") {
-        alert("Vui lòng chọn tình trạng mối quan hệ.");
-        return;
-    }
-
-    if (education.length < 5 && education.length > 50) {
+    if (education.length !== "" && education.length < 5 && education.length > 50) {
         alert("Tên trường phải từ 5 chữ và tối đa là 50 chữ.");
         return;
     }
@@ -455,7 +489,7 @@ editProfileForm.onsubmit = function(event) {
             document.querySelector(".info--address").textContent = address;
             document.querySelector(".info--birth").textContent = birth;
 
-            alert("Cập nhật thông tin thành công!");
+            // alert("Cập nhật thông tin thành công!");
             modalEditProfile.style.display = "none";
             // location.reload();
         })
