@@ -22,34 +22,30 @@ public class LoginApi extends HttpServlet {
 
     @SneakyThrows
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        Cookie[] cookies = request.getCookies();
-        String username = null;
-        String password = null;
-
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("username".equals(cookie.getName())) {
-                    username = cookie.getValue();
-                } else if ("password".equals(cookie.getName())) {
-                    password = cookie.getValue();
-                }
-            }
-
-            if (username != null && password != null) {
-                User user = userCTL.login(username, password);
-                if (user != null) {
-                    HttpSession session = request.getSession();
-                    session.setAttribute("user", user);
-                    response.sendRedirect("testcookie.jsp");
-                    return;
-                }
-            }
-        }
-
         request.getRequestDispatcher("/Template/Login/login.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
+
+        if (action == null) {
+            action = "login"; // Default action if none provided
+        }
+
+        switch (action) {
+            case "login":
+                handleLogin(request, response);
+                break;
+            case "LoginByCookie":
+                handleLoginByCookie(request, response);
+                break;
+            default:
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Unknown action: " + action);
+                break;
+        }
+    }
+
+    private void handleLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
@@ -60,10 +56,11 @@ public class LoginApi extends HttpServlet {
 
         if (user != null) {
             HttpSession session = request.getSession();
-            session.setAttribute("user", user);
+            session.setAttribute("userId", user.getId()); // Lưu userId vào session
+            session.setAttribute("userName", user.getName()); // Lưu name vào session
 
             // Kiểm tra và lưu thông tin đăng nhập vào cookie nếu người dùng chọn lưu
-            if (request.getParameter("rememberMe") != null && request.getParameter("rememberMe").equals("on")) {
+            if ("on".equals(request.getParameter("rememberMe"))) {
                 Cookie usernameCookie = new Cookie("username", username);
                 Cookie passwordCookie = new Cookie("password", password);
                 usernameCookie.setMaxAge(30 * 24 * 60 * 60); // 30 ngày
@@ -86,6 +83,39 @@ public class LoginApi extends HttpServlet {
 
             out.print("{\"success\": true}");
         } else {
+            out.print("{\"success\": false, \"message\": \"Tên đăng nhập hoặc mật khẩu không đúng!\"}");
+        }
+
+        out.flush();
+    }
+
+    private void handleLoginByCookie(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        User user = userCTL.login(username, password);
+
+        response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
+
+        if (user != null) {
+            HttpSession session = request.getSession();
+            session.setAttribute("userId", user.getId()); // Lưu userId vào session
+            session.setAttribute("userName", user.getName()); // Lưu name vào session
+
+            // Không cần tạo lại cookie nếu đã đăng nhập thành công
+            out.print("{\"success\": true}");
+        } else {
+            // Xóa cookie nếu không đăng nhập thành công
+            Cookie usernameCookie = new Cookie("username", "");
+            Cookie passwordCookie = new Cookie("password", "");
+            usernameCookie.setMaxAge(0);
+            passwordCookie.setMaxAge(0);
+            usernameCookie.setPath("/");
+            passwordCookie.setPath("/");
+            response.addCookie(usernameCookie);
+            response.addCookie(passwordCookie);
+
             out.print("{\"success\": false, \"message\": \"Tên đăng nhập hoặc mật khẩu không đúng!\"}");
         }
 

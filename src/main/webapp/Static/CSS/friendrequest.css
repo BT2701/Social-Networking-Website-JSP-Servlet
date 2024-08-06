@@ -1,0 +1,66 @@
+body {
+    display: block;
+    background-color: #e9ebee;
+    width:100%;
+}
+.itemFriend {
+    width: 20%;
+    /*    height: 60%;*/
+    flex-direction: column; /* Để các phần tử bên trong sắp xếp theo chiều dọc */
+    border-radius: 2px ;
+    background-color: #FFFFFF;
+    border: 0px solid #FFFFFF;
+    border-radius: 10px;
+    margin: 2% 2% 2% 2%;
+}
+.imgCustom{
+    width: 100%;
+    height: 100%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.Button{
+    width: 90%;
+    margin-bottom: 5% !important;
+    background-color: #e4e6eb;
+}
+.Button:hover{
+    background-color: #aaa;
+}
+.ButtonAdd{
+    width: 90%;
+    margin-bottom: 5% !important;
+    background-color: #ECF3FF ;
+    color: #0064d1;
+    font-weight: bold; /* Tăng độ đậm của chữ */
+
+}
+.ButtonAdd:hover{
+    background-color: #007ed1 ;
+    color: white;
+}
+.custom-text {
+    cursor: default;
+    transition: color 0.3s; /* Thêm hiệu ứng chuyển màu khi hover */
+}
+.custom-text:hover {
+    color: darkblue; /* Màu chữ khi hover */
+    text-decoration: underline; /* Gạch dưới chữ khi hover */
+}
+.custom-text1 {
+    cursor: default;
+    transition: color 0.3s; /* Thêm hiệu ứng chuyển màu khi hover */
+    color: #888;
+}
+.custom-text1:hover {
+    color: darkblue; /* Màu chữ khi hover */
+}
+.header {
+    position: sticky;
+    top: var(--header-high);
+    background-color: #e9ebee; /* Thay đổi màu nền theo nhu cầu */
+    z-index: 1000; /* Đảm bảo header nằm trên các phần tử khác */
+    padding: 10px;
+}
+
+
