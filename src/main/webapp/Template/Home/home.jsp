@@ -12,78 +12,13 @@
         <link rel="stylesheet" href="../../Static/CSS/base.css">
     </head>
 
-    <body>
-        <header class="text-white p-3 d-flex justify-content-between align-items-center">
-            <div class="homepage-icon"><a href="homepage" id="homepage-icon"><i class="fa-brands fa-facebook" ></i></a></div>
-            <div class="search-input">
-                <input type="text" placeholder="search..." class="form-control">
-                <a href="search"><i class="fa-solid fa-magnifying-glass mx-2 icon-M icon-affect"></i></a>
-            </div>
-            <div class="d-flex">
-                <div class="messenger">
-                    <i class="fas fa-envelope mx-2 icon-M icon-affect" id="icon-messenger"></i>
-                    <div class="messenger-box">
-                        <div class="messenger-box-header">
-                            Chats
-                        </div>
-                        <div class="messenger-box-body custom-scrollbar">
-                            <div class="inbox">
-                                <img src="../../Static/Images/pizzabanner.png" alt="Contact 1"
-                                     class="rounded-circle border border-1 me-3" width="40" height="40">
-                                <div class="inbox-relative">
-                                    <div class="friend-name">
-                                        <span>Nguyen Nhat Truong</span>
-                                    </div>
-                                    <div class="newest-chat">
-                                        <span class="truncate-1line">Xi di choi bida khong, mia nay chan vl</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="messenger-box-footer text-center">
-                            <button>See all chats</button>
-                        </div>
-                    </div>
-                </div>
+<body>
+<jsp:include page="../Header/header.jsp" />
 
-                <div class="notification">
-                    <i class="fas fa-bell mx-2 icon-M icon-affect" id="icon-notification"></i>
-                    <div class="notification-box">
-                        <div class="notification-box-header">Notification</div>
-                        <div class="notification-box-body custom-scrollbar">
-                            <div class="notification-item d-flex">
-                                <img src="../../Static/Images/pizzabanner.png" alt="Contact 1"
-                                     class="rounded-circle border border-1 me-3" width="40" height="40">
-                                <span class="notification-content truncate-2line">Nguyen Nhat Truong moi ban danh bac tai
-                                    song bac
-                                    201
-                                </span>
-                            </div>
-                            <button>See privious notifications</button>
-                        </div>
-                        <!-- <div class="notification-box-footer">
-    
-                        </div> -->
-                    </div>
-
-                </div>
-
-                <div class="user-operation" onclick="displayUserOperator()">
-                    <i class="fas fa-user mx-2 icon-M icon-affect" id="icon-user-operation"></i>
-                    <ul class="user-operation-box">
-                        <li class="user-operation-box-item">
-                            <i class="fa-regular fa-user"></i>
-                            <a href="profile?userId=1"><span>Profile</span></a>
-                        </li>
-                        <li class="user-operation-box-item">
-                            <i class="fa-solid fa-right-from-bracket"></i>
-                            <a href="logout"><span>Logout</span></a>
-                        </li>
-                        <!--                        page friend request-->
-                        <li class="user-operation-box-item">
-                            <i class="fa-solid fa-right-from-bracket"></i>
-                            <a href="javascript:void(0);" onclick="navigateToFriendRequest()"><span>Friend Request</span></a>
-                        </li>
+<main class="container mt-4 mr-1">
+        <div class="row">
+            <div class="col-md-8 d-flex">
+                <div class="col-md-4 navigation">
 
 
                         <li class="user-operation-box-item">
@@ -180,23 +115,25 @@
                         </section>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <!-- Contacts and group chats -->
-                    <section class="contacts custom-scrollbar mb-4">
-                        <h4>Contacts</h4>
-                        <ul class="list-group">
-                            <li class="list-group-item d-flex align-items-center border-0" id="user1"
-                                onclick="appearChatBox()">
-                                <img src=" ../../Static/Images/pizzabanner.png" alt="Contact 1"
-                                     class="rounded-circle border border-1 me-3" width="40" height="40">
-                                <span class="rounded-circle border border-1 active"></span>
-                                <span>Nguyen Nhat Truong</span>
-                            </li>
-                            <li class="list-group-item d-flex align-items-center border-0">
-                                <img src="../../Static/Images/pizzabanner.png" alt="Contact 1"
-                                     class="rounded-circle border border-1 me-3" width="40" height="40">
-                                <span>Nguyen Nhat Truong</span>
-                            </li>
+
+            </div>
+            <div class="col-md-4">
+                <!-- Contacts and group chats -->
+                <section class="contacts custom-scrollbar mb-4">
+                    <h4>Contacts</h4>
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex align-items-center border-0" id="user1"
+                            onclick="appearChatBox()">
+                            <img src="../../Static/Images/pizzabanner.png" alt="Contact 1"
+                                class="rounded-circle border border-1 me-3" width="40" height="40">
+                            <span class="rounded-circle border border-1 active"></span>
+                            <span>Nguyen Nhat Truong</span>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center border-0">
+                            <img src="../../Static/Images/pizzabanner.png" alt="Contact 1"
+                                class="rounded-circle border border-1 me-3" width="40" height="40">
+                            <span>Nguyen Nhat Truong</span>
+                        </li>
 
                         </ul>
                         <hr>
@@ -325,24 +262,24 @@
                                     }
 
                                     function navigateToFriendRequest() {
-                                        // Thay ??i URL mà không t?i l?i trang
+                                        // Thay ??i URL mï¿½ khï¿½ng t?i l?i trang
                                         history.pushState(null, '', '/friendRequest');
-                                        // T?i n?i dung friend_request.jsp vào vùng main
+                                        // T?i n?i dung friend_request.jsp vï¿½o vï¿½ng main
                                         loadFriendRequest();
                                     }
 
                                     $(document).ready(function () {
-                                        // Ki?m tra URL và t?i n?i dung friend request n?u URL kh?p
+                                        // Ki?m tra URL vï¿½ t?i n?i dung friend request n?u URL kh?p
                                         if (window.location.pathname === '/friendRequest') {
                                             loadFriendRequest();
                                         }
 
-                                        // X? lý nút quay l?i ho?c ti?n t?i c?a trình duy?t
+                                        // X? lï¿½ nï¿½t quay l?i ho?c ti?n t?i c?a trï¿½nh duy?t
                                         window.onpopstate = function () {
                                             if (window.location.pathname === '/friendRequest') {
                                                 loadFriendRequest();
                                             } else {
-                                                // T?i l?i trang n?u URL không kh?p
+                                                // T?i l?i trang n?u URL khï¿½ng kh?p
                                                 location.reload();
                                             }
                                         };
