@@ -29,6 +29,7 @@ function togglePasswordVisibility() {
 
 // Gọi hàm validateLoginForm khi người dùng nhấn nút Đăng Nhập
 function Login() {
+    alert("login");
     var username = document.getElementById("txtUsername").value;
     var password = document.getElementById("txtPassword").value;
     if (checkUsername(username)) {
@@ -91,7 +92,8 @@ function checkLogin(username, password) {
         url: "/login",
         data: {
             username: username,
-            password: password
+            password: password,
+            action: 'login'
         },
         success: function (response) {
             if (response.success) {
@@ -136,6 +138,7 @@ function autoLogin() {
     let password = getCookie('password');
     console.log("Username from cookie:", username);
     console.log("Password from cookie:", password);
+    alert("auto username:" + username + " password" + password);
 
     if (username && password) {
         // Gửi thông tin đăng nhập từ cookie đến server
@@ -144,15 +147,18 @@ function autoLogin() {
             url: "/login",
             data: {
                 username: username,
-                password: password
+                password: password,
+                action: 'LoginByCookie'
             },
             success: function (response) {
                 if (response.success) {
-                    alert("auto login");
+                    alert("auto login done username:" + username + " password" + password);
+
                     // Tạo cookie với thông tin đăng nhập
                     document.cookie = "username=" + encodeURIComponent(username) + "; max-age=" + (30 * 24 * 60 * 60) + "; path=/";
                     document.cookie = "password=" + encodeURIComponent(password) + "; max-age=" + (30 * 24 * 60 * 60) + "; path=/";
-                    window.location.href = "index.jsp"; // Chuyển hướng đến trang testcookie.jsp
+                    window.location.href = "/homepage";
+
                 } else {
                     // Xóa cookie nếu có
                     document.cookie = "username=; max-age=0; path=/";
@@ -171,7 +177,7 @@ function autoLogin() {
 }
 
 // Gọi hàm autoLogin khi trang được tải
-$(document).ready(function() {
+$(document).ready(function () {
     autoLogin();
 });
 
