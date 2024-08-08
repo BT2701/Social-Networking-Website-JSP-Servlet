@@ -15,6 +15,9 @@
     <a href="search"><i class="fa-solid fa-magnifying-glass mx-2 icon-M icon-affect"></i></a>
   </div>
   <div class="d-flex">
+    <div class="friend-request">
+      <a href="javascript:void(0);" onclick="navigateToFriendRequest()"><i class="fa-solid fa-users mx-2 icon-M icon-affect"></i></a>
+    </div>
     <div class="messenger">
       <i class="fas fa-envelope mx-2 icon-M icon-affect" id="icon-messenger"></i>
       <div class="messenger-box">
