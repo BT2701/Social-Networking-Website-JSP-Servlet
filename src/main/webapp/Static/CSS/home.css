@@ -485,7 +485,7 @@ box-shadow: 0px 0px 1px 0px #000000;
     top:25%;
     left:8%;
 }
-.fa-magnifying-glass{
+.fa-magnifying-glass, fa-users{
     color: white;
 }
 /*homepage icon*/

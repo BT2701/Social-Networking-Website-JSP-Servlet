@@ -16,21 +16,7 @@
 <jsp:include page="../Header/header.jsp" />
 
 <main class="container mt-4 mr-1">
-        <div class="row">
-            <div class="col-md-8 d-flex">
-                <div class="col-md-4 navigation">
-
-
-                        <li class="user-operation-box-item">
-                            <i class="fa-solid fa-gear"></i>
-                            <span>Setting</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </header>
-        <main class="container mt-4 mr-1">
-            <div class="row">
+     <div class="row">
                 <div class="col-md-8 d-flex">
                     <div class="col-md-4 navigation">
 
