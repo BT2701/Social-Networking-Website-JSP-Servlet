@@ -3,24 +3,35 @@ let postToUpdate = null;
 let postToLike = null;
 let postToUnLike = null;
 let postToComment = null;
-let userId = -1;
+
+const inforTag = document.querySelector('.info');
+let userId = parseInt(inforTag.getAttribute('data-user-id'));
 
 // console.log(getCookie('username'));
 // console.log(getCookie('password'));
 
-if(getCookie('username')) {
-    const infor = document.querySelector('.info');
-    const userIdFromInforTag = infor.getAttribute('data-user-id');
+// if(getCookie('username')) {
+//     const infor = document.querySelector('.info');
+//     const userIdFromInforTag = infor.getAttribute('data-user-id');
+//
+//     const userEmailFromHtml = document.querySelector(".info--email").innerHTML.trim();
+//     const userEmailFromCookie = decodeURIComponent(getCookie('username')).trim(); // Giải mã cookie username
+//
+//     if (userEmailFromHtml === userEmailFromCookie) {
+//         userId = parseInt(userIdFromInforTag);
+//     }
+// }
 
-    const email = document.querySelector(".info--email").innerHTML.trim();
-    const username = decodeURIComponent(getCookie('username')).trim(); // Giải mã cookie username
-    if (email === username) {
-        userId = parseInt(userIdFromInforTag);
-    }
-}
+// Hàm để lấy giá trị cookie
+// function getCookie(name) {
+//     const value = `; ${document.cookie}`;
+//     const parts = value.split(`; ${name}=`);
+//     if (parts.length === 2) return parts.pop().split(';').shift();
+//     return null;
+// }
 
 const urlParams = new URLSearchParams(window.location.search);
-const profileUserId = urlParams.get('userId');
+const profileUserId = parseInt(urlParams.get('userId'));
 if (userId === profileUserId) {
     document.getElementById('editProfileBtn').style.display = 'block';
 
@@ -38,13 +49,17 @@ if (userId === profileUserId) {
     })
 }
 
-// Hàm để lấy giá trị cookie
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-    return null;
-}
+// notifycation
+// const socket = new WebSocket("ws://localhost:8080/notifications");
+// socket.onopen = function (event) {
+//     alert("Ket noi socket thanh cong !")
+// }
+// socket.onmessage = function(event) {
+//     alert(event.data);
+// };
+// socket.onclose = function (event) {
+//     alert("Ket noi socket thanh cong !")
+// }
 
 // edit post
 const modalEditPost = document.getElementById('editPostModal');
@@ -157,6 +172,12 @@ document.querySelectorAll(".post__comment-input input").forEach(input => {
         if (event.key === 'Enter') {
             const submitButton = event.target.parentElement.querySelector(".submit-comment-Btn");
             if (submitButton) {
+                if(userId === -1) {
+                    alert("Please login before performing action!")
+                    window.location.href = "/login";
+                    return;
+                }
+
                 submitButton.click();
             }
         }
@@ -165,6 +186,12 @@ document.querySelectorAll(".post__comment-input input").forEach(input => {
 document.querySelectorAll(".submit-comment-Btn").forEach(cmtBtn => {
     cmtBtn.addEventListener("click", () => {
         if(postToComment) {
+            if(userId === -1) {
+                alert("Please login before performing action!")
+                window.location.href = "/login";
+                return;
+            }
+
             const commentList = postToComment.querySelector(".post__comment-list");
             const inputComment = postToComment.querySelector(".post__comment-input input");
             const commentContent = inputComment.value;
@@ -207,13 +234,18 @@ document.querySelectorAll(".submit-comment-Btn").forEach(cmtBtn => {
 // like and unlike post
 document.querySelectorAll(".like-button").forEach(likeBtn => {
     likeBtn.addEventListener("click", () => {
+        // console.log(userId);
+        if(userId === -1) {
+            alert("Please login before performing action!")
+            window.location.href = "/login";
+            return;
+        }
         if(postToLike) {
             const postId = postToLike.getAttribute("data-post-id");
 
             const likePreview = postToLike.querySelector(".like-preview");
             const unLikePreview = postToLike.querySelector(".unlike-preview");
             const numOfLikes = parseInt(likePreview.textContent);
-
 
             fetch(`/api/post/like?userId=${userId}&postId=${postId}`, {
                 method: 'POST'
@@ -235,6 +267,11 @@ document.querySelectorAll(".like-button").forEach(likeBtn => {
 })
 document.querySelectorAll(".unlike-button").forEach(unLikeBtn => {
     unLikeBtn.addEventListener("click", () => {
+        if(userId === -1) {
+            alert("Please login before performing action!")
+            window.location.href = "/login";
+            return;
+        }
         if(postToUnLike) {
             const postId = postToUnLike.getAttribute("data-post-id");
 

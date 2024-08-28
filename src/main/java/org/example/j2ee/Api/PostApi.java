@@ -21,6 +21,8 @@ public class PostApi extends HttpServlet {
     PostSV postSV = new PostSV();
     public final ObjectMapper mapper = new ObjectMapper();
 
+//    private NotificationSV notificationService = new NotificationSV();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doGet(req, resp);
@@ -57,6 +59,10 @@ public class PostApi extends HttpServlet {
 
         boolean success = postSV.likePost(userId, postId);
 
+        // Gửi thông báo cho chủ bài post
+        Post post = postSV.getPostById(postId);
+//        notificationService.notify(String.valueOf(post.getUser().getId()), userId + " đã thả tim bài viết của bạn.");
+
         if (success) {
             resp.setStatus(HttpServletResponse.SC_OK);
             resp.getWriter().write("{\"message\": \"Like successful\"}");
@@ -85,6 +91,10 @@ public class PostApi extends HttpServlet {
         String content = req.getParameter("commentContent");
 
         Comment cmt = postSV.commentPost(userId, postId, content);
+
+        // Gửi thông báo cho chủ bài post
+        Post post = postSV.getPostById(postId);
+//        notificationService.notify(String.valueOf(post.getUser().getId()), userId + " đã bình luận: " + cmt.getContent());
 
         if (cmt != null) {
             resp.setStatus(HttpServletResponse.SC_OK);

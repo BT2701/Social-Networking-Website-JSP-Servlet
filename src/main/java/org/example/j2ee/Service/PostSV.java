@@ -9,6 +9,7 @@ import org.example.j2ee.Model.User;
 import org.example.j2ee.Util.JPAUtil;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class PostSV {
     public Post getPostById(int id) {
@@ -60,13 +61,14 @@ public class PostSV {
         try {
             transaction.begin();
 
-            Reaction reaction = em.createQuery("SELECT r FROM Reaction r WHERE r.user.id = :userId AND r.post.id = :postId", Reaction.class)
+            List<Reaction> reaction = em.createQuery("SELECT r FROM Reaction r WHERE r.user.id = :userId AND r.post.id = :postId", Reaction.class)
                     .setParameter("userId", userId)
                     .setParameter("postId", postId)
-                    .getSingleResult();
+                    .getResultList();
 
-            if (reaction != null) {
-                em.remove(reaction);
+            if (!reaction.isEmpty()) {
+                // Nếu tìm thấy, xóa đối tượng
+                em.remove(reaction.get(0));
                 transaction.commit();
                 return true;
             } else {

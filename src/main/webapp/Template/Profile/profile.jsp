@@ -18,7 +18,19 @@
                     <img class="profile__avatar" alt="avatar" src="/uploads/${user.avt}">
                     <div id="editAvatar"><i class="fa-solid fa-pen"></i></div>
                 </div>
-                <div class="info" data-user-id="${user.id}">
+                <%
+                    if(session == null) {
+                        out.println("<div class=\"info\" data-user-id=\"-1\">");
+                        return;
+                    }
+
+                    Object userIdObj = session.getAttribute("userId");
+                    if (userIdObj != null) {
+                        String userId = userIdObj.toString();
+                        out.println("<div class=\"info\" data-user-id=\"" + userId + "\">");
+                    }
+                %>
+<%--                <div class="info" data-user-id="${user.id}">--%>
                     <h2 class="info--name">${user.name}</h2>
                     <p>${friendsCount} friends</p>
                     <p class="info--desc">${user.desc}</p>
@@ -119,10 +131,10 @@
                             </div>
                         </c:if>
                         <div class="post__action">
-                            <div class="like-button ${post.likedByUser ? '' : 'active'}">
+                            <div class="like-button ${post.likedByCurrentUser ? '' : 'active'}">
                                 <button><i class="fa-regular fa-heart"></i> Like (<span class="like-preview">${fn:length(post.reactions)}</span>)</button>
                             </div>
-                            <div class="unlike-button ${post.likedByUser ? 'active' : ''}">
+                            <div class="unlike-button ${post.likedByCurrentUser ? 'active' : ''}">
                                 <button><i class="fa-solid fa-heart"></i> Unlike (<span class="unlike-preview">${fn:length(post.reactions)}</span>)</button>
                             </div>
 
