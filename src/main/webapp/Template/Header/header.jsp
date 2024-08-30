@@ -6,9 +6,8 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/Static/CSS/home.css">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/Static/CSS/base.css">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/Static/CSS/header.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/Static/CSS/home.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/Static/CSS/base.css">
 </head>
 <body>
 <header class="text-white p-3 d-flex justify-content-between align-items-center">
@@ -48,29 +47,29 @@
     </div>
 
     <div class="notification">
-      <div class="notification__icon-wrapper">
-        <i class="fas fa-bell mx-2 icon-M icon-affect" id="icon-notification" data-user-id="${userId}"></i>
-        <div class="notification-quantity">${notificationsQuantity}</div>
-      </div>
-
-      <div class="notification-box">
-        <div class="notification-box-header">Notification</div>
-        <div class="notification-box-body custom-scrollbar">
-          <c:forEach var="notification" items="${notifications}">
-            <div class="notification-item d-flex ${notification.is_read == 1 ? '' : 'notification-unread'}">
-              <div class="notification__image-container">
-                <img src="/uploads/${notification.user.avt}" alt="Contact 1">
-              </div>
-              <div class="notification__infor">
-                <div class="notification__infor-user-name" >${notification.user.name}</div>
-                <div class="notification-content truncate-2line">
-                    ${notification.content}
-                </div>
-              </div>
-            </div>
-          </c:forEach>
+        <div class="notification__icon-wrapper">
+            <i class="fas fa-bell mx-2 icon-M icon-affect" id="icon-notification" data-user-id="${sessionScope.userId}"></i>
+            <div class="notification-quantity">${requestScope.notificationsQuantity}</div>
         </div>
-      </div>
+
+        <div class="notification-box">
+            <div class="notification-box-header">Notification</div>
+            <div class="notification-box-body custom-scrollbar">
+                <c:forEach var="notification" items="${requestScope.notifications}">
+                    <div class="notification-item d-flex ${notification.is_read == 1 ? '' : 'notification-unread'}">
+                        <div class="notification__image-container">
+                            <img src="/uploads/${notification.user.avt}" alt="Contact 1">
+                        </div>
+                        <div class="notification__infor">
+                            <div class="notification__infor-user-name" >${notification.user.name}</div>
+                            <div class="notification-content truncate-2line">
+                                    ${notification.content}
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+        </div>
 
     </div>
 
@@ -104,8 +103,9 @@
     </div>
   </div>
 </header>
+
 <script src="${pageContext.request.contextPath}/Static/JS/header.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../../Static/JS/home.js"></script>
+<script src="${pageContext.request.contextPath}/Static/JS/home.js"></script>
 </body>
 </html>

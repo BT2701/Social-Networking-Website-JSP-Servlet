@@ -11,8 +11,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <header class="header">
+    <jsp:include page="../Header/header.jsp" />
+
+    <div class="container-a">
+        <div class="header">
             <div class="header__info">
                 <div class="image__container">
                     <img class="profile__avatar" alt="avatar" src="/uploads/${user.avt}">
@@ -30,7 +32,6 @@
                         out.println("<div class=\"info\" data-user-id=\"" + userId + "\">");
                     }
                 %>
-<%--                <div class="info" data-user-id="${user.id}">--%>
                     <h2 class="info--name">${user.name}</h2>
                     <p>${friendsCount} friends</p>
                     <p class="info--desc">${user.desc}</p>
@@ -39,7 +40,7 @@
             <div class="header__option">
                 <button id="editProfileBtn"><i class="fa-solid fa-pen"></i> Edit profile</button>
             </div>
-        </header>
+        </div>
         <p class="separator"></p>
         <section class="content">
             <aside class="content__leftside">
@@ -131,10 +132,10 @@
                             </div>
                         </c:if>
                         <div class="post__action">
-                            <div class="like-button ${post.likedByCurrentUser ? '' : 'active'}">
+                            <div class="like-button ${post.likedByCurrentUser ? '' : 'activeBtn'}">
                                 <button><i class="fa-regular fa-heart"></i> Like (<span class="like-preview">${fn:length(post.reactions)}</span>)</button>
                             </div>
-                            <div class="unlike-button ${post.likedByCurrentUser ? 'active' : ''}">
+                            <div class="unlike-button ${post.likedByCurrentUser ? 'activeBtn' : ''}">
                                 <button><i class="fa-solid fa-heart"></i> Unlike (<span class="unlike-preview">${fn:length(post.reactions)}</span>)</button>
                             </div>
 
@@ -152,7 +153,9 @@
                                     <div class="post__comment-item">
                                         <a href="${pageContext.request.contextPath}/profile?userId=${comment.user.id}"><img src="/uploads/${comment.user.avt}" alt="post__comment"></a>
                                         <div>
-                                            <a href="${pageContext.request.contextPath}/profile?userId=${comment.user.id}"><h4>${comment.user.name}</h4></a>
+                                            <a href="${pageContext.request.contextPath}/profile?userId=${comment.user.id}">
+                                                <h4 class="post__comment--user-name">${comment.user.name}</h4>
+                                            </a>
                                             <p>${comment.content}</p>
                                         </div>
                                     </div>
@@ -180,7 +183,7 @@
     <!-- The Modal see list friend-->
     <div id="friendsModal" class="modal">
         <div class="friendsModal-container">
-            <div class="modal-content">
+            <div class="my-modal-content">
                 <span class="close">&times;</span>
                 <h3>Friends List</h3>
                 <div class="friend-list">
@@ -318,6 +321,8 @@
     </div>
 
     <script src="${pageContext.request.contextPath}/Static/JS/profile.js"></script>
+<%--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>--%>
+<%--    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>--%>
 </body>
 </html>
 

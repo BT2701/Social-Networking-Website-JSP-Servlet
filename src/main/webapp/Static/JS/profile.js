@@ -49,18 +49,6 @@ if (userId === profileUserId) {
     })
 }
 
-// notifycation
-// const socket = new WebSocket("ws://localhost:8080/notifications");
-// socket.onopen = function (event) {
-//     alert("Ket noi socket thanh cong !")
-// }
-// socket.onmessage = function(event) {
-//     alert(event.data);
-// };
-// socket.onclose = function (event) {
-//     alert("Ket noi socket thanh cong !")
-// }
-
 // edit post
 const modalEditPost = document.getElementById('editPostModal');
 const modalEditPostContent = document.querySelector('.modal-content-EditPost');
@@ -81,14 +69,14 @@ document.querySelectorAll('.post').forEach(post => {
     likeButton.addEventListener('click', () => {
         postToLike = post;
         postToUnLike = null;
-        likeButton.classList.remove('active');
-        unlikeButton.classList.add('active');
+        likeButton.classList.remove('activeBtn');
+        unlikeButton.classList.add('activeBtn');
     });
     unlikeButton.addEventListener('click', () => {
         postToLike = null;
         postToUnLike = post;
-        unlikeButton.classList.remove('active');
-        likeButton.classList.add('active');
+        unlikeButton.classList.remove('activeBtn');
+        likeButton.classList.add('activeBtn');
     });
 
 
@@ -385,7 +373,7 @@ const modalFriends = document.getElementById("friendsModal");
 const btn = document.getElementById("friendsBtn");
 const span = document.getElementsByClassName("close")[0];
 const modalFriendsContainer = document.querySelector(".friendsModal-container");
-const modalFriendsContent = document.querySelector(".modal-content");
+const modalFriendsContent = document.querySelector(".my-modal-content");
 
 modalFriendsContainer.onclick = () => {
     modalFriends.style.display = "none";

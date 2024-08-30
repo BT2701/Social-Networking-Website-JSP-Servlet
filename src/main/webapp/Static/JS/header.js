@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const userId = iconNotification.getAttribute("data-user-id");
 
         if(userId == -1) {
-            alert("Please login before performing action!");
+            // alert("Please login before performing action!");
             return;
         }
 
@@ -41,3 +41,16 @@ document.addEventListener("DOMContentLoaded", function() {
             });
     });
 });
+
+const socket = new WebSocket("ws://localhost:8080/notificationSocket");
+
+socket.onopen = function(event) {
+    alert("Connected to notificationSocket successfully !");
+};
+socket.onmessage = function(event) {
+    let notification = event.data;
+    alert(notification);
+};
+socket.onclose = function(event) {
+    alert("Close notificationSocket !");
+};

@@ -11,10 +11,16 @@ body {
 }
 
 .display-none {
-    display: none;
+    display: none !important;
 }
 .display-block {
     display: block;
+}
+
+.header-container {
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
 }
 
 .header {
@@ -22,6 +28,8 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    margin-top: 70px;
 }
 .header__info {
     display: flex;
@@ -88,6 +96,11 @@ body {
 }
 .image__container:hover #editAvatar{
     display: flex;
+}
+
+.info--name {
+    font-size: 25px;
+    font-weight: bold;
 }
 
 .separator {
@@ -212,7 +225,7 @@ body {
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.4);
 }
-.modal-content {
+.my-modal-content {
     background-color: #fefefe;
     padding: 20px;
     border: 1px solid #888;
@@ -489,7 +502,7 @@ body {
 }
 
 .post__action {
-    padding: 15px 20px 0px;
+    padding: 15px 20px 0;
 
     display: flex;
     align-items: center;
@@ -524,7 +537,7 @@ body {
 .like-button, .unlike-button {
     display: none;
 }
-.like-button.active, .unlike-button.active {
+.like-button.activeBtn, .unlike-button.activeBtn {
     display: inline-block;
 }
 
@@ -587,10 +600,20 @@ body {
 
     margin-right: 10px;
 }
+.post__comment--user-name {
+    font-size: 17px;
+    font-weight: bold;
+
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
 .post__comment-item p {
     /*max-width: 85%;*/
     display: block;
     word-wrap: break-word;
+
+    margin-bottom: 0;
+    padding-bottom: 0;
 }
 .comment__see-more {
     margin-top: 20px;
