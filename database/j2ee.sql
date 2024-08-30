@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `comment` (
   CONSTRAINT `FK_comment_user` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table j2ee.comment: ~6 rows (approximately)
+-- Dumping data for table j2ee.comment: ~7 rows (approximately)
 INSERT INTO `comment` (`id`, `user`, `post`, `content`, `timeline`) VALUES
 	(1, 1, 4, 'is this joke?', '2024-07-22 12:09:42'),
 	(2, 4, 1, 'nice', '2024-07-22 12:09:56'),
@@ -73,12 +73,13 @@ CREATE TABLE IF NOT EXISTS `friendrequest` (
   KEY `FK_friendrequest_user_2` (`receiver`),
   CONSTRAINT `FK_friendrequest_user` FOREIGN KEY (`sender`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_friendrequest_user_2` FOREIGN KEY (`receiver`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table j2ee.friendrequest: ~2 rows (approximately)
+-- Dumping data for table j2ee.friendrequest: ~3 rows (approximately)
 INSERT INTO `friendrequest` (`id`, `sender`, `receiver`, `timeline`) VALUES
 	(8, 1, 3, '2024-07-31 15:46:18'),
-	(11, 1, 2, '2024-08-01 11:31:37');
+	(11, 1, 2, '2024-08-01 11:31:37'),
+	(12, 4, 5, '2024-08-01 14:02:09');
 
 -- Dumping structure for table j2ee.group
 CREATE TABLE IF NOT EXISTS `group` (
@@ -131,12 +132,19 @@ CREATE TABLE IF NOT EXISTS `message` (
 CREATE TABLE IF NOT EXISTS `notification` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user` int(11) NOT NULL DEFAULT 0,
+  `receiver` int(11) NOT NULL DEFAULT 0,
+  `post` int(11) DEFAULT 0,
   `content` varchar(255) NOT NULL DEFAULT '0',
   `is_read` int(11) NOT NULL DEFAULT 0,
   `timeline` timestamp NOT NULL DEFAULT current_timestamp(),
+  `Column 6` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_notification_user` (`user`),
-  CONSTRAINT `FK_notification_user` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `FK_notification_user_2` (`receiver`),
+  KEY `FK_notification_post` (`post`) USING BTREE,
+  CONSTRAINT `FK_notification_post` FOREIGN KEY (`post`) REFERENCES `post` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_notification_user` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_notification_user_2` FOREIGN KEY (`receiver`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dumping data for table j2ee.notification: ~0 rows (approximately)
@@ -151,14 +159,15 @@ CREATE TABLE IF NOT EXISTS `post` (
   PRIMARY KEY (`id`),
   KEY `FK_post_user` (`user`),
   CONSTRAINT `FK_post_user` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table j2ee.post: ~4 rows (approximately)
+-- Dumping data for table j2ee.post: ~5 rows (approximately)
 INSERT INTO `post` (`id`, `user`, `content`, `image`, `timeline`) VALUES
 	(1, 1, 'the first post', '63b8a620-b096-4707-a96b-0775e50b0aa1-guy.jpg', '2024-07-22 12:07:19'),
 	(2, 4, 'hello world', 'fb14c842-445d-4bd3-b9f8-2a32f7121f75-Screenshot 2023-09-30 101609.png', '2024-07-22 12:07:39'),
 	(3, 2, 'coding social project', '29137e04-fc02-451f-8f7f-e0ce58ea7aa6-bìa fb.jpg', '2024-07-22 12:08:03'),
-	(4, 3, 'comedy', '66d3d95b-f38c-46ca-94d2-d5dc2584d2d1-instagram.png', '2024-07-22 12:08:13');
+	(4, 3, 'comedy', '66d3d95b-f38c-46ca-94d2-d5dc2584d2d1-instagram.png', '2024-07-22 12:08:13'),
+	(5, 1, 'the second post', 'pizzashop.png', '2024-08-02 14:06:15');
 
 -- Dumping structure for table j2ee.reaction
 CREATE TABLE IF NOT EXISTS `reaction` (
@@ -215,9 +224,9 @@ CREATE TABLE IF NOT EXISTS `user` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table j2ee.user: ~4 rows (approximately)
+-- Dumping data for table j2ee.user: ~5 rows (approximately)
 INSERT INTO `user` (`name`, `id`, `birth`, `avt`, `phone`, `email`, `gender`, `desc`, `isonline`, `last_active`, `password`, `address`, `social`, `education`, `relationship`, `timejoin`) VALUES
-	('Duong Thanh Truong', 1, '2003-01-27', '1ffb222a-41c5-4ed5-93f5-e3a4b68494e8-avt.jpg', '0386094783', 'aaaa@gmail.com', 'Nam', 'abc', 1, '2024-07-22 11:56:18', '12345678', 'abc', 'github.com/B', 'Sai Gon University', 'Độc thân', '2024-07-22 11:56:49'),
+	('Duong Thanh Truong', 1, '2003-01-27', '33b17aa0-8f67-4b59-b1dc-57663bf64a3f-guy.jpg', '0386094783', 'aaaa@gmail.com', 'Nam', 'abc', 1, '2024-07-22 11:56:18', '12345678', 'abc', 'github.com/B', 'Sai Gon University', 'Độc thân', '2024-07-22 11:56:49'),
 	('Pham Tan Dat', 2, '2003-07-22', 'pizzashop.png', '1234567890', 'abc', 'nam', NULL, 1, '2024-07-22 12:05:35', '12345678', NULL, NULL, 'Sai Gon University', NULL, '2024-07-22 12:05:48'),
 	('Pham Van Du', 3, '2003-07-22', 'pizzashop.png', '1234567890', 'aaaa', 'nam', NULL, 1, '2024-07-22 12:06:15', '', NULL, NULL, '', NULL, '2024-07-22 12:06:19'),
 	('Nguyen Nhat Truong', 4, '2003-07-22', 'pizzashop.png', '1234567890', NULL, 'nam', NULL, 1, '2024-07-22 12:06:36', '', NULL, NULL, 'Sai Gon University', NULL, '2024-07-22 12:06:44'),
