@@ -94,6 +94,10 @@ public class User {
     private List<Notification> notifications;
 
     @JsonIgnore
+    @OneToMany(mappedBy = "receiver")
+    private List<Notification> receiveNotifications;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Reaction> reactions;
 
