@@ -15,6 +15,12 @@ public class Notification {
     @ManyToOne
     @JoinColumn(name = "user", referencedColumnName = "id")
     private User user;
+    @ManyToOne
+    @JoinColumn(name = "receiver", referencedColumnName = "id")
+    private User receiver;
+    @ManyToOne
+    @JoinColumn(name = "post", referencedColumnName = "id")
+    private Post post;
     @Column
     private String content;
     @Column
