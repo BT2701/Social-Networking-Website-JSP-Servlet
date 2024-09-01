@@ -91,6 +91,19 @@ public class UserSV {
         }
     }
 
+    public User findUserById(int userId) {
+        EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
+        try {
+            Query query = em.createQuery("SELECT u FROM User u WHERE u.id = :userId");
+            query.setParameter("userId", userId);
+            return (User) query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } finally {
+            em.close();
+        }
+    }
+
     public boolean updatePassword(String userId, String newPassword) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         EntityTransaction tx = null;

@@ -55,31 +55,6 @@ document.getElementById("fileInput").onchange = function (event) {
   event.target.value = "";
 };
 
-//XỬ LÝ HIỂN THỊ BOX NOTIFICATION,MESSENGER AND USER OPERATION
-document.addEventListener("DOMContentLoaded", () => {
-  // Function to handle dropdown toggling
-  function setupDropdown(iconId, dropdownClass) {
-    const icon = document.getElementById(iconId);
-    const dropdown = document.querySelector(dropdownClass);
-
-    // Toggle the dropdown visibility
-    icon.addEventListener("click", (event) => {
-      //   event.stopPropagation(); // Prevent the click event from propagating to the document
-      dropdown.classList.toggle("d-block");
-    });
-    // Hide dropdown when clicking outside
-    document.addEventListener("click", (event) => {
-      if (!icon.contains(event.target) && !dropdown.contains(event.target)) {
-        dropdown.classList.remove("d-block");
-      }
-    });
-  }
-  // Setup each icon with its corresponding dropdown
-  setupDropdown("icon-messenger", ".messenger-box");
-  setupDropdown("icon-notification", ".notification-box");
-  setupDropdown("icon-user-operation", ".user-operation-box");
-});
-
 //test chat box
 document.addEventListener("DOMContentLoaded", () => {
   const chatBoxes = document.querySelectorAll(".chat-box");

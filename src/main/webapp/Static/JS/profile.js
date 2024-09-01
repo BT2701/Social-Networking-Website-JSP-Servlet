@@ -3,24 +3,35 @@ let postToUpdate = null;
 let postToLike = null;
 let postToUnLike = null;
 let postToComment = null;
-let userId = -1;
+
+const inforTag = document.querySelector('.info');
+let userId = parseInt(inforTag.getAttribute('data-user-id'));
 
 // console.log(getCookie('username'));
 // console.log(getCookie('password'));
 
-if(getCookie('username')) {
-    const infor = document.querySelector('.info');
-    const userIdFromInforTag = infor.getAttribute('data-user-id');
+// if(getCookie('username')) {
+//     const infor = document.querySelector('.info');
+//     const userIdFromInforTag = infor.getAttribute('data-user-id');
+//
+//     const userEmailFromHtml = document.querySelector(".info--email").innerHTML.trim();
+//     const userEmailFromCookie = decodeURIComponent(getCookie('username')).trim(); // Giải mã cookie username
+//
+//     if (userEmailFromHtml === userEmailFromCookie) {
+//         userId = parseInt(userIdFromInforTag);
+//     }
+// }
 
-    const email = document.querySelector(".info--email").innerHTML.trim();
-    const username = decodeURIComponent(getCookie('username')).trim(); // Giải mã cookie username
-    if (email === username) {
-        userId = parseInt(userIdFromInforTag);
-    }
-}
+// Hàm để lấy giá trị cookie
+// function getCookie(name) {
+//     const value = `; ${document.cookie}`;
+//     const parts = value.split(`; ${name}=`);
+//     if (parts.length === 2) return parts.pop().split(';').shift();
+//     return null;
+// }
 
 const urlParams = new URLSearchParams(window.location.search);
-const profileUserId = urlParams.get('userId');
+const profileUserId = parseInt(urlParams.get('userId'));
 if (userId === profileUserId) {
     document.getElementById('editProfileBtn').style.display = 'block';
 
@@ -36,14 +47,6 @@ if (userId === profileUserId) {
         post.querySelector('.btn-edit').style.display = 'none';
         post.querySelector('.btn-delete').style.display = 'none';
     })
-}
-
-// Hàm để lấy giá trị cookie
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-    return null;
 }
 
 // edit post
@@ -66,14 +69,14 @@ document.querySelectorAll('.post').forEach(post => {
     likeButton.addEventListener('click', () => {
         postToLike = post;
         postToUnLike = null;
-        likeButton.classList.remove('active');
-        unlikeButton.classList.add('active');
+        likeButton.classList.remove('activeBtn');
+        unlikeButton.classList.add('activeBtn');
     });
     unlikeButton.addEventListener('click', () => {
         postToLike = null;
         postToUnLike = post;
-        unlikeButton.classList.remove('active');
-        likeButton.classList.add('active');
+        unlikeButton.classList.remove('activeBtn');
+        likeButton.classList.add('activeBtn');
     });
 
 
@@ -157,6 +160,12 @@ document.querySelectorAll(".post__comment-input input").forEach(input => {
         if (event.key === 'Enter') {
             const submitButton = event.target.parentElement.querySelector(".submit-comment-Btn");
             if (submitButton) {
+                if(userId === -1) {
+                    alert("Please login before performing action!")
+                    window.location.href = "/login";
+                    return;
+                }
+
                 submitButton.click();
             }
         }
@@ -165,6 +174,12 @@ document.querySelectorAll(".post__comment-input input").forEach(input => {
 document.querySelectorAll(".submit-comment-Btn").forEach(cmtBtn => {
     cmtBtn.addEventListener("click", () => {
         if(postToComment) {
+            if(userId === -1) {
+                alert("Please login before performing action!")
+                window.location.href = "/login";
+                return;
+            }
+
             const commentList = postToComment.querySelector(".post__comment-list");
             const inputComment = postToComment.querySelector(".post__comment-input input");
             const commentContent = inputComment.value;
@@ -189,7 +204,9 @@ document.querySelectorAll(".submit-comment-Btn").forEach(cmtBtn => {
                     cmt.innerHTML = `
                         <a href="/profile?userId=${comment.user.id}"><img src="/uploads/${comment.user.avt}" alt="post__comment"></a>
                         <div>
-                            <a href="/profile?userId=${comment.user.id}"><h4>${comment.user.name}</h4></a>
+                            <a href="/profile?userId=${comment.user.id}">
+                                <h4 class="post__comment--user-name">${comment.user.name}</h4>
+                            </a>
                             <p>${comment.content}</p>
                         </div>
                     `;
@@ -207,13 +224,18 @@ document.querySelectorAll(".submit-comment-Btn").forEach(cmtBtn => {
 // like and unlike post
 document.querySelectorAll(".like-button").forEach(likeBtn => {
     likeBtn.addEventListener("click", () => {
+        // console.log(userId);
+        if(userId === -1) {
+            alert("Please login before performing action!")
+            window.location.href = "/login";
+            return;
+        }
         if(postToLike) {
             const postId = postToLike.getAttribute("data-post-id");
 
             const likePreview = postToLike.querySelector(".like-preview");
             const unLikePreview = postToLike.querySelector(".unlike-preview");
             const numOfLikes = parseInt(likePreview.textContent);
-
 
             fetch(`/api/post/like?userId=${userId}&postId=${postId}`, {
                 method: 'POST'
@@ -235,6 +257,11 @@ document.querySelectorAll(".like-button").forEach(likeBtn => {
 })
 document.querySelectorAll(".unlike-button").forEach(unLikeBtn => {
     unLikeBtn.addEventListener("click", () => {
+        if(userId === -1) {
+            alert("Please login before performing action!")
+            window.location.href = "/login";
+            return;
+        }
         if(postToUnLike) {
             const postId = postToUnLike.getAttribute("data-post-id");
 
@@ -348,7 +375,7 @@ const modalFriends = document.getElementById("friendsModal");
 const btn = document.getElementById("friendsBtn");
 const span = document.getElementsByClassName("close")[0];
 const modalFriendsContainer = document.querySelector(".friendsModal-container");
-const modalFriendsContent = document.querySelector(".modal-content");
+const modalFriendsContent = document.querySelector(".my-modal-content");
 
 modalFriendsContainer.onclick = () => {
     modalFriends.style.display = "none";

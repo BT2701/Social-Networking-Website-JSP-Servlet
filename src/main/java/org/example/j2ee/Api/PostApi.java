@@ -4,13 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
+import jakarta.servlet.http.*;
 import org.example.j2ee.Model.Comment;
 import org.example.j2ee.Model.Post;
+import org.example.j2ee.Model.User;
+import org.example.j2ee.Service.NotificationSV;
 import org.example.j2ee.Service.PostSV;
+import org.example.j2ee.Service.UserSV;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,8 +18,10 @@ import java.io.IOException;
 @WebServlet("/api/post/*")
 @MultipartConfig(maxFileSize = 5242880, maxRequestSize = 10485760)
 public class PostApi extends HttpServlet {
-    PostSV postSV = new PostSV();
     public final ObjectMapper mapper = new ObjectMapper();
+    private final NotificationSV notificationSV = new NotificationSV();
+    private final PostSV postSV = new PostSV();
+    private final UserSV userSV = new UserSV();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -51,11 +53,20 @@ public class PostApi extends HttpServlet {
 
     }
 
-    private void handleLike(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void handleLike(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         int userId = Integer.parseInt(req.getParameter("userId"));
         int postId = Integer.parseInt(req.getParameter("postId"));
 
         boolean success = postSV.likePost(userId, postId);
+
+        // Gửi thông báo cho chủ bài post
+        Post post = postSV.getPostById(postId);
+        int receiverId = post.getUser().getId();
+        if(receiverId != userId) {
+            User user = userSV.findUserById(userId);
+            String content = user.getName() + " liked your post !";
+            notificationSV.createOrUpdateNotification(content, userId, receiverId, post);
+        }
 
         if (success) {
             resp.setStatus(HttpServletResponse.SC_OK);
@@ -85,6 +96,15 @@ public class PostApi extends HttpServlet {
         String content = req.getParameter("commentContent");
 
         Comment cmt = postSV.commentPost(userId, postId, content);
+
+        // Gửi thông báo cho chủ bài post
+        Post post = postSV.getPostById(postId);
+        int receiverId = post.getUser().getId();
+        if(receiverId != userId) {
+            User user = userSV.findUserById(userId);
+            String ntfContent = user.getName() + " commented on your post !";
+            notificationSV.createOrUpdateNotification(ntfContent, userId, receiverId, post);
+        }
 
         if (cmt != null) {
             resp.setStatus(HttpServletResponse.SC_OK);

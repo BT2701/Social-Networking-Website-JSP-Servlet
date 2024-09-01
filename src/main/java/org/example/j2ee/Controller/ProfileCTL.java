@@ -23,6 +23,13 @@ public class ProfileCTL extends HttpServlet  {
     @SneakyThrows
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String userIdParam = request.getParameter("userId");
+        Integer currentUserId = (Integer) request.getSession().getAttribute("userId");
+
+        if (currentUserId == null) {
+            response.sendRedirect("login");
+            return;
+        }
+
         if (userIdParam == null || userIdParam.isEmpty()) {
             response.sendRedirect("index.jsp");
             return;
@@ -37,7 +44,7 @@ public class ProfileCTL extends HttpServlet  {
             } else {
                 long friendsCount = profileService.countFriends(userId);
                 List<User> friends = profileService.getFriendsFromUserId(userId);
-                List<Post> posts = profileService.getPostsFromUserId(userId);
+                List<Post> posts = profileService.getPostsFromUserId(userId, currentUserId);
 
                 request.setAttribute("posts", posts);
                 request.setAttribute("user", user);

@@ -41,7 +41,7 @@ public class Post {
     private List<Reaction> reactions;
 
     @Transient
-    private boolean likedByUser;
+    private boolean likedByCurrentUser;
 
     @Transient
     private boolean owner;

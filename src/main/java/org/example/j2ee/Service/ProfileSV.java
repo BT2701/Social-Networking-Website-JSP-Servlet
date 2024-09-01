@@ -124,20 +124,22 @@ public class ProfileSV {
     }
 
 
-    public List<Post> getPostsFromUserId(int userId) {
+    public List<Post> getPostsFromUserId(int postOwnerId, int currentUserId) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         EntityTransaction transaction = em.getTransaction();
         try {
             transaction.begin();
             List<Post> posts = em.createQuery("SELECT p FROM Post p WHERE p.user.id = :userId")
-                    .setParameter("userId", userId)
+                    .setParameter("userId", postOwnerId)
                     .getResultList();
 
             posts.forEach(post -> {
                 post.setComments(getCommentsByPostId(post.getId()));
                 post.setReactions(getReactionsByPostId(post.getId()));
 
-                post.setLikedByUser(post.getReactions().stream().anyMatch(r -> r.getUser().getId() == userId));
+                // Kiểm tra nếu bài post đã được like bởi người dùng đang đăng nhập
+                post.setLikedByCurrentUser(post.getReactions().stream()
+                        .anyMatch(r -> r.getUser().getId() == currentUserId));
             });
 
             transaction.commit();
