@@ -34,35 +34,38 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // Gửi yêu cầu PUT đến API
-        fetch("/api/notification?userId=" + userId, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            }
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error("Failed to mark notifications as read");
+        const dropdown = document.querySelector(".notification-box");
+        if(!dropdown.classList.contains("d-block")) {
+            // Gửi yêu cầu PUT đến API
+            fetch("/api/notification?userId=" + userId, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
                 }
             })
-            .then(data => {
-                if (data.success) {
-                    notificationQuantityElement.textContent = "0";
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error("Failed to mark notifications as read");
+                    }
+                })
+                .then(data => {
+                    if (data.success) {
+                        notificationQuantityElement.textContent = "0";
 
-                    const unreadNotifications = document.querySelectorAll(".notification-unread");
-                    unreadNotifications.forEach(notification => {
-                        notification.classList.remove("notification-unread");
-                    });
-                } else {
-                    console.error("Failed to mark notifications as read");
-                }
-            })
-            .catch(error => {
-                console.error("Error:", error);
-            });
+                        const unreadNotifications = document.querySelectorAll(".notification-unread");
+                        unreadNotifications.forEach(notification => {
+                            notification.classList.remove("notification-unread");
+                        });
+                    } else {
+                        console.error("Failed to mark notifications as read");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                });
+        }
     });
 });
 
