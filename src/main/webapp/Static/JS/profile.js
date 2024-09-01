@@ -204,7 +204,9 @@ document.querySelectorAll(".submit-comment-Btn").forEach(cmtBtn => {
                     cmt.innerHTML = `
                         <a href="/profile?userId=${comment.user.id}"><img src="/uploads/${comment.user.avt}" alt="post__comment"></a>
                         <div>
-                            <a href="/profile?userId=${comment.user.id}"><h4>${comment.user.name}</h4></a>
+                            <a href="/profile?userId=${comment.user.id}">
+                                <h4 class="post__comment--user-name">${comment.user.name}</h4>
+                            </a>
                             <p>${comment.content}</p>
                         </div>
                     `;

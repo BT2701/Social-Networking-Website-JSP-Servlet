@@ -1,47 +1,39 @@
 package org.example.j2ee.Socket;
 
-import jakarta.websocket.OnMessage;
-import jakarta.websocket.OnOpen;
-import jakarta.websocket.Session;
+import jakarta.websocket.*;
+import jakarta.websocket.server.PathParam;
 import jakarta.websocket.server.ServerEndpoint;
-
 import java.io.IOException;
-import java.util.Set;
-import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.ConcurrentHashMap;
 
-@ServerEndpoint("/notificationSocket")
+@ServerEndpoint("/notifications/{userId}")
 public class NotificationWebSocket {
 
-    private static final Set<Session> sessions = new CopyOnWriteArraySet<>();
+    private static ConcurrentHashMap<Integer, Session> userSessions = new ConcurrentHashMap<>();
 
     @OnOpen
-    public void onOpen(Session session) {
-        sessions.add(session);
+    public void onOpen(Session session, @PathParam("userId") int userId) {
+        userSessions.put(userId, session);
     }
 
-    @OnMessage
-    public void onMessage(String message, Session session) {
-        // Broadcast the message to all connected clients
-        sessions.forEach(s -> {
+    @OnClose
+    public void onClose(Session session, @PathParam("userId") int userId) {
+        userSessions.remove(userId);
+    }
+
+    @OnError
+    public void onError(Session session, Throwable throwable) {
+        throwable.printStackTrace();
+    }
+
+    public static void sendNotification(int userId, String message) {
+        Session session = userSessions.get(userId);
+        if (session != null && session.isOpen()) {
             try {
-                if (s.isOpen()) {
-                    s.getBasicRemote().sendText(message);
-                }
+                session.getBasicRemote().sendText(message);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        });
-    }
-
-    public static void sendNotification(String message) {
-        sessions.forEach(session -> {
-            try {
-                if (session.isOpen()) {
-                    session.getBasicRemote().sendText(message);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        }
     }
 }

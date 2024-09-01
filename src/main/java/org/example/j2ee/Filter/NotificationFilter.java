@@ -28,7 +28,7 @@ public class NotificationFilter implements Filter {
         Integer userId = (Integer) session.getAttribute("userId");
 
         if (userId != null) {
-            List<Notification> notifications = notificationService.getAllNotificationsByUserId(userId.toString());
+            List<Notification> notifications = notificationService.getAllNotificationsByReceiverId(userId.toString());
             long countUnreadNotifications = notifications.stream().filter(notification -> notification.getIs_read() != 1).count();
             String displayCount = countUnreadNotifications > 99 ? "99+" : String.valueOf(countUnreadNotifications);
 

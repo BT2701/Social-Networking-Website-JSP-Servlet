@@ -4,10 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
+import jakarta.servlet.http.*;
 import org.example.j2ee.Model.Comment;
 import org.example.j2ee.Model.Post;
 import org.example.j2ee.Model.User;
@@ -64,10 +61,11 @@ public class PostApi extends HttpServlet {
 
         // Gửi thông báo cho chủ bài post
         Post post = postSV.getPostById(postId);
-        if(post.getUser().getId() != userId) {
+        int receiverId = post.getUser().getId();
+        if(receiverId != userId) {
             User user = userSV.findUserById(userId);
             String content = user.getName() + " liked your post !";
-            notificationSV.createNotification(content, post.getUser().getId());
+            notificationSV.createOrUpdateNotification(content, userId, receiverId, post);
         }
 
         if (success) {
@@ -101,10 +99,11 @@ public class PostApi extends HttpServlet {
 
         // Gửi thông báo cho chủ bài post
         Post post = postSV.getPostById(postId);
-        if(post.getUser().getId() != userId) {
+        int receiverId = post.getUser().getId();
+        if(receiverId != userId) {
             User user = userSV.findUserById(userId);
             String ntfContent = user.getName() + " commented on your post !";
-            notificationSV.createNotification(ntfContent, post.getUser().getId());
+            notificationSV.createOrUpdateNotification(ntfContent, userId, receiverId, post);
         }
 
         if (cmt != null) {

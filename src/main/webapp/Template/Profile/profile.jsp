@@ -114,7 +114,7 @@
                             <div class="post__info--user">
                                 <img class="profile__avatar" src="/uploads/${post.user.avt}" alt="avatar">
                                 <div>
-                                    <h3>${post.user.name}</h3>
+                                    <h3 class="info--name-post">${post.user.name}</h3>
                                     <small>${post.timeline}</small>
                                 </div>
                             </div>
@@ -321,8 +321,6 @@
     </div>
 
     <script src="${pageContext.request.contextPath}/Static/JS/profile.js"></script>
-<%--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>--%>
-<%--    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>--%>
 </body>
 </html>
 

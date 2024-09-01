@@ -54,14 +54,13 @@
 
         <div class="notification-box">
             <div class="notification-box-header">Notification</div>
-            <div class="notification-box-body custom-scrollbar">
+            <div id="notification-container" class="notification-box-body custom-scrollbar">
                 <c:forEach var="notification" items="${requestScope.notifications}">
                     <div class="notification-item d-flex ${notification.is_read == 1 ? '' : 'notification-unread'}">
                         <div class="notification__image-container">
                             <img src="/uploads/${notification.user.avt}" alt="Contact 1">
                         </div>
                         <div class="notification__infor">
-                            <div class="notification__infor-user-name" >${notification.user.name}</div>
                             <div class="notification-content truncate-2line">
                                     ${notification.content}
                             </div>
