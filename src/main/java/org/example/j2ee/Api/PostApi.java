@@ -4,14 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import jakarta.servlet.http.Part;
+import jakarta.servlet.http.*;
 import org.example.j2ee.Model.Comment;
 import org.example.j2ee.Model.Post;
+import org.example.j2ee.Model.User;
+import org.example.j2ee.Service.NotificationSV;
 import org.example.j2ee.Service.PostSV;
+import org.example.j2ee.Service.UserSV;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,9 +23,11 @@ import org.example.j2ee.Controller.PostCTL;
 @MultipartConfig(maxFileSize = 5242880, maxRequestSize = 10485760)
 public class PostApi extends HttpServlet {
 
-    PostSV postSV = new PostSV();
     PostCTL postCTL = new PostCTL();
     public final ObjectMapper mapper = new ObjectMapper();
+    private final NotificationSV notificationSV = new NotificationSV();
+    private final PostSV postSV = new PostSV();
+    private final UserSV userSV = new UserSV();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -62,11 +63,20 @@ public class PostApi extends HttpServlet {
 
     }
 
-    private void handleLike(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void handleLike(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         int userId = Integer.parseInt(req.getParameter("userId"));
         int postId = Integer.parseInt(req.getParameter("postId"));
 
         boolean success = postSV.likePost(userId, postId);
+
+        // Gửi thông báo cho chủ bài post
+        Post post = postSV.getPostById(postId);
+        int receiverId = post.getUser().getId();
+        if(receiverId != userId) {
+            User user = userSV.findUserById(userId);
+            String content = user.getName() + " liked your post !";
+            notificationSV.createOrUpdateNotification(content, user, receiverId, post);
+        }
 
         if (success) {
             resp.setStatus(HttpServletResponse.SC_OK);
@@ -82,6 +92,14 @@ public class PostApi extends HttpServlet {
 
         boolean success = postSV.unLikePost(userId, postId);
 
+        Post post = postSV.getPostById(postId);
+        int receiverId = post.getUser().getId();
+        if(receiverId != userId) {
+            User user = userSV.findUserById(userId);
+            String content = user.getName() + " unliked your post !";
+            notificationSV.deleteLikeNotification(content, user, receiverId, postId);
+        }
+
         if (success) {
             resp.setStatus(HttpServletResponse.SC_OK);
             resp.getWriter().write("{\"message\": \"UnLike successful\"}");
@@ -96,6 +114,15 @@ public class PostApi extends HttpServlet {
         String content = req.getParameter("commentContent");
 
         Comment cmt = postSV.commentPost(userId, postId, content);
+
+        // Gửi thông báo cho chủ bài post
+        Post post = postSV.getPostById(postId);
+        int receiverId = post.getUser().getId();
+        if(receiverId != userId) {
+            User user = userSV.findUserById(userId);
+            String ntfContent = user.getName() + " commented on your post !";
+            notificationSV.createNotification(ntfContent, user, receiverId, post);
+        }
 
         if (cmt != null) {
             resp.setStatus(HttpServletResponse.SC_OK);
@@ -151,7 +178,7 @@ public class PostApi extends HttpServlet {
         try {
             Post post = postSV.getPostById(postId);
 
-            if (post != null) {
+            if(post != null) {
                 String fileName = post.getImage();
                 String uploadDir = getServletContext().getRealPath("") + File.separator + "uploads";
                 File file = new File(uploadDir + File.separator + fileName);
@@ -159,7 +186,7 @@ public class PostApi extends HttpServlet {
                     file.delete();
                 }
 
-                if (postSV.deletePost(postId)) {
+                if(postSV.deletePost(postId)) {
                     resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
                 }
             } else {

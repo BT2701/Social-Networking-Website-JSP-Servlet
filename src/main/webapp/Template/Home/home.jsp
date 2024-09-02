@@ -71,9 +71,9 @@
                                                     <span class="numberLike">
                                                         ${fn:length(post.reactions)}
                                                     </span>
-                                                    <button class="like-button ${post.likedByUser ? '' : 'appear'}"> <i
+                                                    <button class="like-button ${post.likedByCurrentUser ? '' : 'appear'}"> <i
                                                             class="fa-regular fa-heart icon-L"></i></button>
-                                                    <button class="unlike-button ${post.likedByUser ? 'appear' : ''}">
+                                                    <button class="unlike-button ${post.likedByCurrentUser ? 'appear' : ''}">
                                                         <i class="fa-solid fa-heart icon-L heart-red"></i></button>
                                                 </div>
                                                 <div class="comment-action">

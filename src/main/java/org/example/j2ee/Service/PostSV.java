@@ -66,13 +66,14 @@ public class PostSV {
         try {
             transaction.begin();
 
-            Reaction reaction = em.createQuery("SELECT r FROM Reaction r WHERE r.user.id = :userId AND r.post.id = :postId", Reaction.class)
+            List<Reaction> reaction = em.createQuery("SELECT r FROM Reaction r WHERE r.user.id = :userId AND r.post.id = :postId", Reaction.class)
                     .setParameter("userId", userId)
                     .setParameter("postId", postId)
-                    .getSingleResult();
+                    .getResultList();
 
-            if (reaction != null) {
-                em.remove(reaction);
+            if (!reaction.isEmpty()) {
+                // Nếu tìm thấy, xóa đối tượng
+                em.remove(reaction.get(0));
                 transaction.commit();
                 return true;
             } else {
@@ -220,7 +221,7 @@ public class PostSV {
             posts.forEach(post -> {
 //                post.setComments(getCommentsByPostId(post.getId()));
 //                post.setReactions(getReactionsByPostId(post.getId()));
-                post.setLikedByUser(post.getReactions().stream().anyMatch(r -> r.getUser().getId() == post.getUser().getId()));
+                post.setLikedByCurrentUser(post.getReactions().stream().anyMatch(r -> r.getUser().getId() == post.getUser().getId()));
             });
         } catch (Exception e) {
             e.printStackTrace();

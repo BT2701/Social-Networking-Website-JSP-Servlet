@@ -11,14 +11,27 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <header class="header">
+    <jsp:include page="../Header/header.jsp" />
+
+    <div class="container-a">
+        <div class="header">
             <div class="header__info">
                 <div class="image__container">
                     <img class="profile__avatar" alt="avatar" src="/uploads/${user.avt}">
                     <div id="editAvatar"><i class="fa-solid fa-pen"></i></div>
                 </div>
-                <div class="info" data-user-id="${user.id}">
+                <%
+                    if(session == null) {
+                        out.println("<div class=\"info\" data-user-id=\"-1\">");
+                        return;
+                    }
+
+                    Object userIdObj = session.getAttribute("userId");
+                    if (userIdObj != null) {
+                        String userId = userIdObj.toString();
+                        out.println("<div class=\"info\" data-user-id=\"" + userId + "\">");
+                    }
+                %>
                     <h2 class="info--name">${user.name}</h2>
                     <p>${friendsCount} friends</p>
                     <p class="info--desc">${user.desc}</p>
@@ -27,7 +40,7 @@
             <div class="header__option">
                 <button id="editProfileBtn"><i class="fa-solid fa-pen"></i> Edit profile</button>
             </div>
-        </header>
+        </div>
         <p class="separator"></p>
         <section class="content">
             <aside class="content__leftside">
@@ -101,7 +114,7 @@
                             <div class="post__info--user">
                                 <img class="profile__avatar" src="/uploads/${post.user.avt}" alt="avatar">
                                 <div>
-                                    <h3>${post.user.name}</h3>
+                                    <h3 class="info--name-post">${post.user.name}</h3>
                                     <small>${post.timeline}</small>
                                 </div>
                             </div>
@@ -119,10 +132,10 @@
                             </div>
                         </c:if>
                         <div class="post__action">
-                            <div class="like-button ${post.likedByUser ? '' : 'active'}">
+                            <div class="like-button ${post.likedByCurrentUser ? '' : 'activeBtn'}">
                                 <button><i class="fa-regular fa-heart"></i> Like (<span class="like-preview">${fn:length(post.reactions)}</span>)</button>
                             </div>
-                            <div class="unlike-button ${post.likedByUser ? 'active' : ''}">
+                            <div class="unlike-button ${post.likedByCurrentUser ? 'activeBtn' : ''}">
                                 <button><i class="fa-solid fa-heart"></i> Unlike (<span class="unlike-preview">${fn:length(post.reactions)}</span>)</button>
                             </div>
 
@@ -140,7 +153,9 @@
                                     <div class="post__comment-item">
                                         <a href="${pageContext.request.contextPath}/profile?userId=${comment.user.id}"><img src="/uploads/${comment.user.avt}" alt="post__comment"></a>
                                         <div>
-                                            <a href="${pageContext.request.contextPath}/profile?userId=${comment.user.id}"><h4>${comment.user.name}</h4></a>
+                                            <a href="${pageContext.request.contextPath}/profile?userId=${comment.user.id}">
+                                                <h4 class="post__comment--user-name">${comment.user.name}</h4>
+                                            </a>
                                             <p>${comment.content}</p>
                                         </div>
                                     </div>
@@ -168,7 +183,7 @@
     <!-- The Modal see list friend-->
     <div id="friendsModal" class="modal">
         <div class="friendsModal-container">
-            <div class="modal-content">
+            <div class="my-modal-content">
                 <span class="close">&times;</span>
                 <h3>Friends List</h3>
                 <div class="friend-list">

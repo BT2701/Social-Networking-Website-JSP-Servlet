@@ -34,10 +34,14 @@ public class Post {
 
     @JsonIgnore // để tránh vòng lặp vô hạn khi lấy dữ liệu
     @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
+    private List<Notification> notifications;
+
+    @JsonIgnore // để tránh vòng lặp vô hạn khi lấy dữ liệu
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
     private List<Reaction> reactions;
 
     @Transient
-    private boolean likedByUser;
+    private boolean likedByCurrentUser;
 
     @Transient
     private boolean owner;

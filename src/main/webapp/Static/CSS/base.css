@@ -61,29 +61,46 @@
 
 /* CUSTOM SCROLL BAR FOR THE SCROLL BAR IS THIN */
 /* For WebKit browsers (Chrome, Safari) */
+/*.custom-scrollbar::-webkit-scrollbar {*/
+/*    width: 8px;*/
+/*    !* Adjust the width as desired *!*/
+/*    height: 5px;*/
+/*    !* Adjust the height as desired *!*/
+/*}*/
+
+/*.custom-scrollbar::-webkit-scrollbar-thumb {*/
+/*    background: #888;*/
+/*    !* Color of the scrollbar thumb *!*/
+/*    border-radius: 50px;*/
+/*    !* Rounded corners *!*/
+/*}*/
+
+/*.custom-scrollbar::-webkit-scrollbar-track {*/
+/*    background: #f1f1f1;*/
+/*    !* Color of the scrollbar track *!*/
+/*}*/
+
+/*!* For Firefox *!*/
+/*.custom-scrollbar {*/
+/*    scrollbar-width: thin;*/
+/*    !* Make scrollbar thinner *!*/
+/*    scrollbar-color: #888 #f1f1f1;*/
+/*    !* Thumb color and track color *!*/
+/*}*/
+
+/* width */
 .custom-scrollbar::-webkit-scrollbar {
     width: 8px;
-    /* Adjust the width as desired */
-    height: 5px;
-    /* Adjust the height as desired */
 }
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #888;
-    /* Color of the scrollbar thumb */
-    border-radius: 50px;
-    /* Rounded corners */
-}
-
+/* Track */
 .custom-scrollbar::-webkit-scrollbar-track {
     background: #f1f1f1;
-    /* Color of the scrollbar track */
 }
-
-/* For Firefox */
-.custom-scrollbar {
-    scrollbar-width: thin;
-    /* Make scrollbar thinner */
-    scrollbar-color: #888 #f1f1f1;
-    /* Thumb color and track color */
+/* Handle */
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #888;
+}
+/* Handle on hover */
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
