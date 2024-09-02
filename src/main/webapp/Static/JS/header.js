@@ -78,30 +78,46 @@ if(curUserId && curUserId != -1) {
         alert("Connected to notificationSocket successfully !");
     };
     socket.onmessage = function(event) {
-        let notification = event.data;
+        let notification = JSON.parse(event.data);
 
+        // Xóa tất cả các thông báo hiện tại trong notification-container
         const notificationContainer = document.getElementById("notification-container");
-        const ntf = document.createElement('div');
-        ntf.classList.add('notification-item');
-        ntf.classList.add('d-flex');
-        ntf.classList.add('notification-unread');
-        ntf.innerHTML = `
-                        <div class="notification__image-container">
-                            <img src="/uploads/img1.jpg" alt="Contact 1">
-                        </div>
-                        <div class="notification__infor">
-                            <div class="notification-content truncate-2line">
-                                    ${notification}
-                            </div>
-                        </div>
-                    `;
+        notificationContainer.innerHTML = "";
 
-        const ntfQuantity = document.querySelector(".notification-quantity");
-        const numOfNtf = parseInt(ntfQuantity.textContent);
-        ntfQuantity.innerHTML = (numOfNtf + 1).toString();
-        notificationContainer.prepend(ntf);
+        // Gọi API để lấy danh sách thông báo mới
+        fetch('/api/notification?userId=' + curUserId)
+            .then(response => response.json())
+            .then(notifications => {
+                notifications.forEach(notification => {
+                    const ntf = document.createElement('div');
+                    ntf.classList.add('notification-item', 'd-flex');
+                    if (notification.is_read != 1) {
+                        ntf.classList.add('notification-unread');
+                    }
 
-        alert(notification);
+                    ntf.innerHTML = `
+                    <div class="notification__image-container">
+                        <img src="/uploads/${notification.user.avt}" alt="${notification.user.name}">
+                    </div>
+                    <div class="notification__infor">
+                        <div class="notification-content truncate-2line">
+                            ${notification.content}
+                        </div>
+                    </div>
+                `;
+
+                    notificationContainer.appendChild(ntf);
+                });
+
+                // Cập nhật số lượng thông báo chưa đọc
+                const ntfQuantity = document.querySelector(".notification-quantity");
+                const unreadCount = notifications.filter(n => n.is_read != 1).length;
+                ntfQuantity.innerHTML = unreadCount > 99 ? "99+" : unreadCount.toString();
+
+                // Hiển thị nội dung thông báo mới nhất (nếu cần)
+                alert(notification.content);
+            })
+            .catch(error => console.error('Error fetching notifications:', error));
     };
     socket.onclose = function(event) {
         alert("Close notificationSocket !");

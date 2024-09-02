@@ -65,7 +65,7 @@ public class PostApi extends HttpServlet {
         if(receiverId != userId) {
             User user = userSV.findUserById(userId);
             String content = user.getName() + " liked your post !";
-            notificationSV.createOrUpdateNotification(content, userId, receiverId, post);
+            notificationSV.createOrUpdateNotification(content, user, receiverId, post);
         }
 
         if (success) {
@@ -81,6 +81,14 @@ public class PostApi extends HttpServlet {
         int postId = Integer.parseInt(req.getParameter("postId"));
 
         boolean success = postSV.unLikePost(userId, postId);
+
+        Post post = postSV.getPostById(postId);
+        int receiverId = post.getUser().getId();
+        if(receiverId != userId) {
+            User user = userSV.findUserById(userId);
+            String content = user.getName() + " unliked your post !";
+            notificationSV.deleteLikeNotification(content, user, receiverId, postId);
+        }
 
         if (success) {
             resp.setStatus(HttpServletResponse.SC_OK);
@@ -103,7 +111,7 @@ public class PostApi extends HttpServlet {
         if(receiverId != userId) {
             User user = userSV.findUserById(userId);
             String ntfContent = user.getName() + " commented on your post !";
-            notificationSV.createOrUpdateNotification(ntfContent, userId, receiverId, post);
+            notificationSV.createNotification(ntfContent, user, receiverId, post);
         }
 
         if (cmt != null) {
