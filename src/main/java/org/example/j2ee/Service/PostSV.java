@@ -2,6 +2,7 @@ package org.example.j2ee.Service;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Query;
 import org.example.j2ee.Model.Comment;
 import org.example.j2ee.Model.Post;
 import org.example.j2ee.Model.Reaction;
@@ -9,8 +10,13 @@ import org.example.j2ee.Model.User;
 import org.example.j2ee.Util.JPAUtil;
 
 import java.sql.Timestamp;
+import java.util.Collections;
+import java.util.List;
 
 public class PostSV {
+
+    private ProfileSV profileSV = new ProfileSV();
+
     public Post getPostById(int id) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         try {
@@ -156,5 +162,73 @@ public class PostSV {
         } finally {
             em.close();
         }
+    }
+
+//    public boolean createPost(Post post) {
+//        EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
+//        EntityTransaction transaction = em.getTransaction();
+//        try {
+//            transaction.begin();
+//            em.persist(post); // Use persist to create a new entity
+//            transaction.commit();
+//            return true; // Return true if commit is successful
+//        } catch (Exception e) {
+//            if (transaction.isActive()) {
+//                transaction.rollback(); // Rollback in case of exception
+//            }
+//            e.printStackTrace();
+//            return false; // Return false if there is an exception
+//        } finally {
+//            em.close(); // Đảm bảo đóng EntityManager
+//        }
+//    }
+
+    public Post createPost(Post post) {
+        EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+        try {
+            transaction.begin();
+            em.persist(post); // Persist the new Post entity
+
+            // Flush and refresh the entity to ensure it's updated with any database-generated values
+            em.flush();       // Synchronize the persistence context with the database
+            em.refresh(post); // Refresh the post object to reflect the database state
+
+            transaction.commit(); // Commit the transaction
+            return post; // Return the updated Post object
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback(); // Rollback in case of exception
+            }
+            e.printStackTrace();
+            return null; // Return null if there is an exception
+        } finally {
+            em.close(); // Ensure EntityManager is closed
+        }
+    }
+
+
+    public List<Post> getTheNewestPosts() {
+        EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+        List<Post> posts = null;
+        try {
+            transaction.begin();
+            posts = em.createQuery("SELECT p FROM Post p ORDER BY p.timeline DESC", Post.class)
+                    .setMaxResults(5)
+                    .getResultList();
+            posts.forEach(post -> {
+//                post.setComments(getCommentsByPostId(post.getId()));
+//                post.setReactions(getReactionsByPostId(post.getId()));
+                post.setLikedByUser(post.getReactions().stream().anyMatch(r -> r.getUser().getId() == post.getUser().getId()));
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return posts;
     }
 }
