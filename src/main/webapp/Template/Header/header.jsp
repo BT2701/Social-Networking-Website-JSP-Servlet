@@ -1,11 +1,13 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Title</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-  <link rel="stylesheet" href="../../Static/CSS/home.css">
-  <link rel="stylesheet" href="../../Static/CSS/base.css">
+
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/Static/CSS/home.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/Static/CSS/base.css">
 </head>
 <body>
 <header class="text-white p-3 d-flex justify-content-between align-items-center">
@@ -45,24 +47,28 @@
     </div>
 
     <div class="notification">
-      <i class="fas fa-bell mx-2 icon-M icon-affect" id="icon-notification"></i>
-      <div class="notification-box">
-        <div class="notification-box-header">Notification</div>
-        <div class="notification-box-body custom-scrollbar">
-          <div class="notification-item d-flex">
-            <img src="../../Static/Images/pizzabanner.png" alt="Contact 1"
-                 class="rounded-circle border border-1 me-3" width="40" height="40">
-            <span class="notification-content truncate-2line">Nguyen Nhat Truong moi ban danh bac tai
-                                song bac
-                                201
-                            </span>
-          </div>
-          <button>See privious notifications</button>
+        <div class="notification__icon-wrapper">
+            <i class="fas fa-bell mx-2 icon-M icon-affect" id="icon-notification" data-user-id="${sessionScope.userId}"></i>
+            <div class="notification-quantity">${requestScope.notificationsQuantity}</div>
         </div>
-        <!-- <div class="notification-box-footer">
 
-        </div> -->
-      </div>
+        <div class="notification-box">
+            <div class="notification-box-header">Notification</div>
+            <div id="notification-container" class="notification-box-body custom-scrollbar">
+                <c:forEach var="notification" items="${requestScope.notifications}">
+                    <div class="notification-item d-flex ${notification.is_read == 1 ? '' : 'notification-unread'}">
+                        <div class="notification__image-container">
+                            <img src="/uploads/${notification.user.avt}" alt="Contact 1">
+                        </div>
+                        <div class="notification__infor">
+                            <div class="notification-content truncate-2line">
+                                    ${notification.content}
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+        </div>
 
     </div>
 
@@ -71,7 +77,18 @@
       <ul class="user-operation-box">
         <li class="user-operation-box-item">
           <i class="fa-regular fa-user"></i>
-          <a href="profile?userId=1"><span>Profile</span></a>
+          <%
+            if(session == null) {
+              out.println("<a href=\"login\"><span>Login</span></a>");
+              return;
+            }
+
+            Object userIdObj = session.getAttribute("userId");
+            if (userIdObj != null) {
+              String userId = userIdObj.toString();
+              out.println("<a href=\"profile?userId=" + userId + "\"><span>Profile</span></a>");
+            }
+          %>
         </li>
         <li class="user-operation-box-item">
           <i class="fa-solid fa-right-from-bracket"></i>
@@ -85,7 +102,9 @@
     </div>
   </div>
 </header>
+
+<script src="${pageContext.request.contextPath}/Static/JS/header.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../../Static/JS/home.js"></script>
+<script src="${pageContext.request.contextPath}/Static/JS/home.js"></script>
 </body>
 </html>

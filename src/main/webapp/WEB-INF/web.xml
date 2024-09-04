@@ -6,4 +6,14 @@
     <welcome-file-list>
         <welcome-file>Template/Home/home.jsp</welcome-file>
     </welcome-file-list>
+
+    <filter>
+        <filter-name>NotificationFilter</filter-name>
+        <filter-class>org.example.j2ee.Filter.NotificationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>NotificationFilter</filter-name>
+        <url-pattern>/*</url-pattern> <!-- Áp dụng cho tất cả các URL -->
+    </filter-mapping>
+
 </web-app>
